@@ -29,6 +29,7 @@ winget install GnuWin32.make
 
 ## Create config.mem file
 ```bash
+cd src
 py config_parser.py .\Si5340-RevD-Si5340-Registers.txt
 ```
 
