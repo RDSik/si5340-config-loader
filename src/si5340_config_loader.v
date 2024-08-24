@@ -63,4 +63,12 @@ module si5340_config_loader #(
     assign scl_pad_i = scl;
     assign sda_pad_i = sda;
 
+    `ifdef COCOTB_SIM
+        initial begin
+            $dumpfile ("si5340_config_loader.vcd");
+            $dumpvars (0, si5340_config_loader);
+            #1;
+        end
+    `endif
+
 endmodule

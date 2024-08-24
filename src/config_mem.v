@@ -59,12 +59,10 @@ module config_mem #(
                     pause_cnt <= pause_cnt + 1;
                     state     <= PAUSE;
                 end
-                INDEX: if (mem_index == WORD_NUMBER - 1) begin
-                    mem_index <= 0;
-                    state     <= IDLE;
-                end else begin
-                    mem_index <= mem_index + 1;
-                    state     <= PAUSE;
+                INDEX: begin
+                    state <= IDLE;
+                    if (mem_index == WORD_NUMBER - 1) mem_index <= 0;
+                    else mem_index <= mem_index + 1;
                 end
                 default: state <= IDLE;
             endcase
