@@ -23,13 +23,13 @@ module si5340_config_loader #(
 
     wire [DATA_WIDTH-1:0] data;
 
-    config_mem #(
+    mem_serializer #(
         .CONFIG_MEM  (CONFIG_MEM ),
         .MEM_WIDTH   (MEM_WIDTH  ),
         .WORD_NUMBER (WORD_NUMBER),
         .DATA_WIDTH  (DATA_WIDTH ),
         .CLK_FREQ    (CLK_FREQ   )
-    ) config_inst (
+    ) serializer_inst (
         .clk_i   (clk_i  ),
         .arstn_i (arstn_i),
         .ack_i   (),
@@ -58,10 +58,10 @@ module si5340_config_loader #(
         .sda_oen (sda_padoen_o)
     );
 
-    assign scl = scl_padoen_oe ? 1'bz : scl_pad_o;
-    assign sda = sda_padoen_oe ? 1'bz : sda_pad_o;
     assign scl_pad_i = scl;
     assign sda_pad_i = sda;
+    assign scl       = scl_padoen_oe ? 1'bz : scl_pad_o;
+    assign sda       = sda_padoen_oe ? 1'bz : sda_pad_o;
 
     `ifdef COCOTB_SIM
         initial begin

@@ -14,7 +14,7 @@ module mem_serializer #(
     localparam PERIOD_NS  = (1/CLK_FREQ) * 1_000_000_000;
     localparam PAUSE_NS   = (300 * 1_000_000)/PERIOD_NS;  // delay 300 msec(300_000_000 ns) and 8 ns period of clock cycle
     localparam CYCLES     = MEM_WIDTH/DATA_WIDTH;         // need 3 cycles to transmit 24 bit for 8 bit data output and pause between every byte
-    localparam SLAVE_ADDR = 8'b11101000                   // [6:0] 1110100 - addr, [7] - write
+    localparam SLAVE_ADDR = 8'b11101000;                  // [6:0] 1110100 - addr, [7] - write
 
     localparam [1:0] IDLE  = 2'b00,
                      DATA  = 2'b01,
@@ -73,8 +73,8 @@ module mem_serializer #(
 
     `ifdef COCOTB_SIM
         initial begin
-            $dumpfile ("config_mem.vcd");
-            $dumpvars (0, config_mem);
+            $dumpfile ("mem_serializer.vcd");
+            $dumpvars (0, mem_serializer);
             #1;
         end
     `endif
