@@ -11,17 +11,17 @@ def test_runner():
     hdl_toplevel_lang = os.getenv("HDL_TOPLEVEL_LANG", "verilog")
     sim = os.getenv("SIM", "icarus")
     
-    build_dir = Path('sim_config_mem')
+    build_dir = Path('sim_mem_serializer')
     build_dir.mkdir(exist_ok=True)
 
     shutil.copyfile(src / 'config.mem', build_dir / 'config.mem')
 
     verilog_sources = [
-        src / "config_mem.v",
+        src / "mem_serializer.v",
     ]
     
-    hdl_toplevel = 'config_mem' # HDL module name
-    test_module = 'config_mem_tb' # Python module name
+    hdl_toplevel = 'mem_serializer' # HDL module name
+    test_module = 'mem_serializer_tb' # Python module name
     # pre_cmd = ['do ../wave.do'] # Macro file
 
     runner = get_runner(sim)

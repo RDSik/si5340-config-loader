@@ -1,5 +1,9 @@
 # Usage
 
+## Doc
+
+[Si5341, Si5340 Reference Manual](docs/Si5341-40-D-RM.pdf)
+
 ## Dependencies 
 
 `cocotb`, `pytest`, `python`, `chocolatey`, `winget`

@@ -1,6 +1,6 @@
-sim/config_mem_tb/*
+sim/mem_serializer_tb/*
 !test.py
-!config_mem_tb.py
+!mem_serializer_tb.py
 sim/i2_master_byte_ctrl_tb/*
 !test.py
 !i2_master_byte_ctrl_tb.py

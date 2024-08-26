@@ -1,4 +1,4 @@
-module config_mem #(
+module mem_serializer #(
     parameter CONFIG_MEM  = "config.mem",
     parameter MEM_WIDTH   = 24,
     parameter WORD_NUMBER = 326,
@@ -11,9 +11,10 @@ module config_mem #(
     output reg  [DATA_WIDTH-1:0] data_o
 );
 
-    localparam PERIOD_NS = (1/CLK_FREQ) * 1_000_000_000;
-    localparam PAUSE_NS  = (300 * 1_000_000)/PERIOD_NS; // delay 300 msec(300_000_000 ns) and 8 ns period of clock cycle
-    localparam CYCLES    = MEM_WIDTH/DATA_WIDTH; // need 3 cycles to transmit 24 bit for 8 bit data output and pause between every byte
+    localparam PERIOD_NS  = (1/CLK_FREQ) * 1_000_000_000;
+    localparam PAUSE_NS   = (300 * 1_000_000)/PERIOD_NS;  // delay 300 msec(300_000_000 ns) and 8 ns period of clock cycle
+    localparam CYCLES     = MEM_WIDTH/DATA_WIDTH;         // need 3 cycles to transmit 24 bit for 8 bit data output and pause between every byte
+    localparam SLAVE_ADDR = 8'b11101000                   // [6:0] 1110100 - addr, [7] - write
 
     localparam [1:0] IDLE  = 2'b00,
                      DATA  = 2'b01,
