@@ -36,6 +36,7 @@ module mem_serializer #(
             mem_index  <= 0;
             pause_cnt  <= 0;
             cycles_cnt <= 0;
+            tmp        <= 0;
             state      <= IDLE;
         end else begin
             case (state)
