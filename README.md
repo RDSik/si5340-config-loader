@@ -15,7 +15,7 @@
 
 ### Clone repository:
 ```bash
-git clone --recurse-submodules https://github.com/RDSik/si5340_config_loader.git
+git clone https://github.com/RDSik/si5340-config-loader.git
 ```
 
 ### Download packages:
