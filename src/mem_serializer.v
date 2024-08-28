@@ -16,11 +16,10 @@ module mem_serializer #(
     localparam CYCLES     = MEM_WIDTH/DATA_WIDTH;         // need 3 cycles to transmit 24 bit for 8 bit data output and pause between every byte
     localparam SLAVE_ADDR = 8'b11101_00_0;                // [6:0] 1110100 - addr, [7] - write/read bit
 
-    localparam [2:0] IDLE  = 3'b000,
-                     DATA  = 3'b001,
-                     PAUSE = 3'b010,
-                     INDEX = 3'b011,
-                     INIT  = 3'b100;
+    localparam [1:0] IDLE  = 2'b00,
+                     DATA  = 2'b01,
+                     PAUSE = 2'b10,
+                     INDEX = 2'b11;
 
     reg [$clog2(CYCLES)-1:0]      cycles_cnt;
     reg [MEM_WIDTH-1:0]           tmp;
