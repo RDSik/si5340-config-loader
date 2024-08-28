@@ -16,6 +16,7 @@
 ### Clone repository:
 ```bash
 git clone https://github.com/RDSik/si5340-config-loader.git
+cd si5340-config-loader
 ```
 
 ### Download packages:
