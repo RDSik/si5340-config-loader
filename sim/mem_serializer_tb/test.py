@@ -23,6 +23,7 @@ def test_runner():
     hdl_toplevel = 'mem_serializer' # HDL module name
     test_module = 'mem_serializer_tb' # Python module name
     # pre_cmd = ['do ../wave.do'] # Macro file
+    parameters = {"CLK_FREQ": "125"} # HDL module parameters
 
     runner = get_runner(sim)
     
@@ -39,5 +40,6 @@ def test_runner():
         waves=True,
         gui=True,
         # pre_cmd=pre_cmd,
+        parameters=parameters,
     )
     
