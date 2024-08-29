@@ -16,14 +16,18 @@ def test_runner():
 
     shutil.copyfile(src / 'config.mem', build_dir / 'config.mem')
 
-    verilog_sources = [
-        src / "config_mem.v",
-        src / "i2c_master_byte_ctrl.v",
-        src / "i2c_master_bit_ctrl.v",
-        src / "i2c_master_defines.v",
-        src / "timescale.v",
-        src / "si5340_config_loader.v",
-    ]
+    verilog_sources = []
+    
+    def files(path):
+        sources = []
+        for (dirpath, dirnames, filenames) in os.walk(path):
+            for file in filenames:
+                if file[len(file)-2:len(file)] == '.v':
+                    sources.append(dirpath.replace("\\", '/') +'/' + file)
+            return sources
+
+    verilog_sources.extend(files(src))
+
     
     hdl_toplevel = 'si5340_config_loader' # HDL module name
     test_module = 'si5340_config_loader_tb' # Python module name
