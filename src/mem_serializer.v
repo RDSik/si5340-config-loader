@@ -51,7 +51,7 @@ module mem_serializer #(
                     end
                 end
                 DATA: if (ack_i) begin
-                    data_o <= tmp[cycles_cnt*DATA_WIDTH +: DATA_WIDTH];
+                    data_o <= tmp[DATA_WIDTH*cycles_cnt +: DATA_WIDTH];
                     flag   <= 0;
                     if (cycles_cnt == 0) begin
                         cycles_cnt <= CYCLES - 1;
