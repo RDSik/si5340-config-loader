@@ -122,15 +122,20 @@ module si5340_config_loader #(
     assign m_i2_ctrl_if.din = queue[queue_index].data;
 
     always_ff @(posedge clk_i) begin
-        queue[0] <= {{SLAVE_ADDR, WRITE}, WRITE, 1, 0};
-        queue[1] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 1};
-        queue[2] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 0};
-        queue[3] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], READ, 0, 1};
-        queue[4] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], READ, 0, 0};
+        if () // Write
+            queue[0] <= {{SLAVE_ADDR, WRITE}, WRITE, 1, 0};
+            queue[1] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 0}; // [23:16] - addr
+            queue[2] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 0}; // [15:8]  - addr
+            queue[3] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 1}; // [7:0]   - data
+        else // Read
+            queue[0] <= {{SLAVE_ADDR, WRITE}, WRITE, 1, 0};
+            queue[1] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 0}; // [23:16] - addr
+            queue[2] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 0}; // [15:8]  - addr
+            queue[3] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], READ, 0, 1};  // [7:0]   - data
     end
 
     always_ff @(posedge clk_sys_i) begin
-        if (state == IDLE) begin
+        if (state == ) begin
             queue_index <= 0;
         end else if (state == ) begin
             queue_index <= queue_index + 1;
