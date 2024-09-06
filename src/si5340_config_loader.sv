@@ -57,7 +57,7 @@ module si5340_config_loader #(
         .sda_oen (sda_padoen_o        )
     );
 
-    localparam QUEUE_LEN = 5;
+    localparam QUEUE_LEN = 4;
 
     struct packed {
         logic [DATA_WIDTH-1:0] data;
