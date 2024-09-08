@@ -101,6 +101,7 @@ module si5340_config_loader #(
         end else begin
             case (state)
                 IDLE: if (load) state <= ACK;
+                else state <= IDLE;
                 ACK: state <= CYCLES;
                 CYCLES: if (m_i2_ctrl_if.cmd_ack) begin
                     if (queue[queue_index].stop) state <= STOP;
