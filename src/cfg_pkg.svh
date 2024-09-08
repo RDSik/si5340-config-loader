@@ -18,7 +18,7 @@ package cfg_pkg;
     typedef enum logic {
         WRITE = 1'b0, 
         READ  = 1'b1
-    } rw;
+    } r_w;
 
 endpackage
 

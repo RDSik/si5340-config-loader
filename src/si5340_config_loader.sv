@@ -9,6 +9,8 @@ module si5340_config_loader #(
 ) (
     input logic clk_i,
     input logic arstn_i,
+    input logic load,
+    input logic write,
 
     // inout wire sda, // SCL-line
     // inout wire scl  // SDA-line
@@ -59,20 +61,24 @@ module si5340_config_loader #(
         .sda_oen (sda_padoen_o        )
     );
 
-    localparam QUEUE_LEN = 4;
+    localparam QUEUE_LEN = 3;
 
     struct packed {
         logic [DATA_WIDTH-1:0] data;
-        rw                     rw;
+        r_w                    rw;
         logic                  start;
         logic                  stop;
     } queue [QUEUE_LEN-1:0];
 
-    enum logic [1:0] {
-        IDLE  = 2'b00,
-        DATA  = 2'b01,
-        PAUSE = 2'b10,
-        INDEX = 2'b11
+    enum logic [3:0] {
+        IDLE        = 3'b000,
+        CYCLES      = 3'b001,
+        PAUSE       = 3'b010,
+        MEM_INDEX   = 3'b011,
+        ACK         = 3'b100,
+        STOP        = 3'b101,
+        WAIT_ACK    = 3'b110,
+        QUEUE_INDEX = 3'b111
     } state;
 
     logic [$clog2(CYCLES)-1:0     ] cycles_cnt;
@@ -86,76 +92,77 @@ module si5340_config_loader #(
 
     always_ff @(posedge clk_i or negedge arstn_i) begin
         if (~arstn_i) begin
-            mem_index  <= 0;
-            pause_cnt  <= 0;
-            cycles_cnt <= CYCLES - 1;
-            state      <= IDLE;
+            mem_index   <= 0;
+            pause_cnt   <= 0;
+            queue_index <= 0;
+            queue       <= 0;
+            cycles_cnt  <= CYCLES - 1;
+            state       <= IDLE;
         end else begin
             case (state)
-                IDLE: state <= DATA;
-                DATA: if (ack_i) begin
-                    if (cycles_cnt == 0) begin
+                IDLE: if (load) state <= ACK;
+                CYCLES: if (m_i2_ctrl_if.cmd_ack) begin
+                    if (queue_index == 0) state <= QUEUE_INDEX;
+                    else if (cycles_cnt == 0) begin
                         cycles_cnt <= CYCLES - 1;
-                        state      <= INDEX;
+                        state      <= MEM_INDEX;
                     end else begin
                         cycles_cnt <= cycles_cnt - 1;
                         state      <= PAUSE;
                     end
-                end else state <= DATA;
+                end else if (queue[queue_index].stop) state <= STOP;
+                else state <= CYCLES;
                 PAUSE: if (pause_cnt == PAUSE_NS) begin
                     pause_cnt <= 0;
-                    state     <= DATA;
+                    state     <= ACK;
                 end else begin
                     pause_cnt <= pause_cnt + 1;
                     state     <= PAUSE;
                 end
-                INDEX: if (mem_index == WORD_NUMBER - 1) begin
+                MEM_INDEX: if (mem_index == WORD_NUMBER - 2) begin
                     mem_index <= 0;
-                    state     <= IDLE;
+                    state     <= QUEUE_INDEX;
                 end else begin
                     mem_index <= mem_index + 1;
-                    state     <= IDLE;
+                    state     <= ACK;
+                end
+                ACK: state <= CYCLES;
+                STOP: state <= WAIT_ACK;
+                WAIT_ACK: if (m_i2_ctrl_if.cmd_ack) state <= QUEUE_INDEX;
+                else state <= WAIT_ACK;
+                QUEUE_INDEX: if (queue_index == QUEUE_LEN - 1) begin 
+                    queue_index <= 0;
+                    state       <= IDLE;
+                end else begin
+                    queue_index <= queue_index + 1;
+                    state       <= PAUSE;
                 end
                 default: state <= IDLE;
             endcase
         end
     end
 
-    assign m_i2_ctrl_if.din = queue[queue_index].data;
-
-    always_ff @(posedge clk_i) begin
-        if () // Write
-            queue[0] <= {{SLAVE_ADDR, WRITE}, WRITE, 1, 0};
-            queue[1] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 0}; // [23:16] - addr
-            queue[2] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 0}; // [15:8]  - addr
-            queue[3] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 1}; // [7:0]   - data
-        else // Read
-            queue[0] <= {{SLAVE_ADDR, WRITE}, WRITE, 1, 0};
-            queue[1] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 0}; // [23:16] - addr
-            queue[2] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 0}; // [15:8]  - addr
-            queue[3] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], READ, 0, 1};  // [7:0]   - data
+    always_comb begin
+        m_i2_ctrl_if.din    = queue[queue_index].data;
+        m_i2_ctrl_if.ack_in = (state == ACK || state == STOP) 1 ? : 0;
+        m_i2_ctrl_if.start  = (state == ACK && queue[queue_index].start) 1 ? : 0;
+        m_i2_ctrl_if.stop   = (state == STOP && queue[queue_index].stop) 1 ? : 0;
+        m_i2_ctrl_if.read   = (state == ACK && queue[queue_index].rw == READ) 1 ? : 0;
+        m_i2_ctrl_if.write  = (state == ACK && queue[queue_index].rw == WRITE) 1 ? : 0;
     end
 
-    always_ff @(posedge clk_sys_i) begin
-        if (state == ) begin
-            queue_index <= 0;
-        end else if (state == ) begin
-            queue_index <= queue_index + 1;
+    always_ff @(posedge clk_i) begin
+        if (state == IDLE && load) begin
+            if (write) begin // Write
+                queue[0] <= {{SLAVE_ADDR, WRITE}, WRITE, 1, 0};
+                queue[1] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 0};
+                queue[2] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 1};
+            end else begin // Read
+                queue[0] <= {{SLAVE_ADDR, WRITE}, WRITE, 1, 0};
+                queue[1] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 0};
+                queue[2] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], READ, 0, 1};
+            end
         end
-    end
-
-    always_ff @(posedge clk_i) begin
-        if (state == && queue[queue_index].rw == WRITE) m_i2_ctrl_if.write <= 1;
-        esle m_i2_ctrl_if.write <= 0;
-        if (state == && queue[queue_index].rw == READ) m_i2_ctrl_if.read <= 1;
-        else m_i2_ctrl_if.read <= 0;
-    end
-
-    always_ff @(posedge clk_i) begin
-        if (state == && queue[queue_index].start) m_i2_ctrl_if.start <= 1;
-        else m_i2_ctrl_if.start <= 0;
-        if (state == && queue[queue_index].stop) m_i2_ctrl_if.stop  <= 1;
-        else m_i2_ctrl_if.stop  <= 0;
     end
 
     `ifdef COCOTB_SIM
