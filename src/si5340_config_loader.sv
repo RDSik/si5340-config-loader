@@ -102,7 +102,7 @@ module si5340_config_loader #(
             case (state)
                 IDLE: if (load) state <= ACK;
                 CYCLES: if (m_i2_ctrl_if.cmd_ack) begin
-                    if (queue_index == 0) state <= QUEUE_INDEX;
+                    if (queue_index == 0 || queue_index == QUEUE_LEN - 1) state <= QUEUE_INDEX;
                     else if (cycles_cnt == 0) begin
                         cycles_cnt <= CYCLES - 1;
                         state      <= MEM_INDEX;
@@ -119,7 +119,7 @@ module si5340_config_loader #(
                     pause_cnt <= pause_cnt + 1;
                     state     <= PAUSE;
                 end
-                MEM_INDEX: if (mem_index == WORD_NUMBER - 2) begin
+                MEM_INDEX: if (mem_index == WORD_NUMBER - 1) begin
                     mem_index <= 0;
                     state     <= QUEUE_INDEX;
                 end else begin
