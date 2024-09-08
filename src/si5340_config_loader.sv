@@ -102,8 +102,11 @@ module si5340_config_loader #(
             case (state)
                 IDLE: if (load) state <= ACK;
                 CYCLES: if (m_i2_ctrl_if.cmd_ack) begin
-                    if (queue_index == 0 || queue_index == QUEUE_LEN - 1) state <= QUEUE_INDEX;
-                    else if (cycles_cnt == 0) begin
+                    if (queue_index == 0) state <= QUEUE_INDEX;
+                    else if (cycles_cnt == 1) begin 
+                        cycles_cnt <= cycles_cnt - 1;
+                        state      <= QUEUE_INDEX;
+                    end else if (cycles_cnt == 0) begin
                         cycles_cnt <= CYCLES - 1;
                         state      <= MEM_INDEX;
                     end else begin
