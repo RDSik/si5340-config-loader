@@ -101,19 +101,18 @@ module si5340_config_loader #(
         end else begin
             case (state)
                 IDLE: if (load) state <= ACK;
+                ACK: state <= CYCLES;
                 CYCLES: if (m_i2_ctrl_if.cmd_ack) begin
+                    if (queue[queue_index].stop) state <= STOP;
                     if (queue_index == 0) state <= QUEUE_INDEX;
-                    else if (cycles_cnt == 1) begin 
-                        cycles_cnt <= cycles_cnt - 1;
-                        state      <= QUEUE_INDEX;
-                    end else if (cycles_cnt == 0) begin
+                    else if (cycles_cnt == 0) begin
                         cycles_cnt <= CYCLES - 1;
                         state      <= MEM_INDEX;
                     end else begin
                         cycles_cnt <= cycles_cnt - 1;
                         state      <= PAUSE;
                     end
-                end else if (queue[queue_index].stop) state <= STOP;
+                end
                 else state <= CYCLES;
                 PAUSE: if (pause_cnt == PAUSE_NS) begin
                     pause_cnt <= 0;
@@ -129,10 +128,6 @@ module si5340_config_loader #(
                     mem_index <= mem_index + 1;
                     state     <= ACK;
                 end
-                ACK: state <= CYCLES;
-                STOP: state <= WAIT_ACK;
-                WAIT_ACK: if (m_i2_ctrl_if.cmd_ack) state <= QUEUE_INDEX;
-                else state <= WAIT_ACK;
                 QUEUE_INDEX: if (queue_index == QUEUE_LEN - 1) begin 
                     queue_index <= 0;
                     state       <= IDLE;
@@ -140,6 +135,9 @@ module si5340_config_loader #(
                     queue_index <= queue_index + 1;
                     state       <= PAUSE;
                 end
+                STOP: state <= WAIT_ACK;
+                WAIT_ACK: if (m_i2_ctrl_if.cmd_ack) state <= QUEUE_INDEX;
+                else state <= WAIT_ACK;
                 default: state <= IDLE;
             endcase
         end
