@@ -23,7 +23,6 @@ module si5340_config_loader #(
     output sda_pad_o,    // SDA-line output (always 1'b0)
     output sda_padoen_o, // SDA-line output enable (active low)
 
-
     i2_ctrl_if.master m_i2_ctrl_if
 );
 
