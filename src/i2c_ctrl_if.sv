@@ -1,6 +1,6 @@
 `include "cfg_pkg.svh"
 
-import cfg_pkg::*;
+import cfg_pkg::DATA_WIDTH;
 
 interface i2_ctrl_if ();
 
