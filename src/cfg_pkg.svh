@@ -5,9 +5,9 @@ package cfg_pkg;
 
     parameter [15:0] CLK_CNT = 4; // 4x SCL
 
-    parameter MEM_WIDTH   = 24;
-    parameter DATA_WIDTH  = 8;
-    parameter WORD_NUMBER = 326;
+    parameter MEM_DEPTH  = 326;
+    parameter MEM_WIDTH  = 24;
+    parameter DATA_WIDTH = 8;
 
     parameter CLK_FREQ   = 125_000_000;                  // clock freaquency
     parameter PERIOD_NS  = (1/CLK_FREQ) * 1_000_000_000; // period of clock cycle in ns
