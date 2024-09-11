@@ -163,7 +163,7 @@ module si5340_config_loader #(
             end else begin // Read
                 queue[0]  <= {{SLAVE_ADDR, WRITE}, WRITE, 1, 0};
                 queue[1]  <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 0};
-                queue[2]  <= {{SLAVE_ADDR, WRITE}, WRITE, 1, 0};
+                queue[2]  <= {{SLAVE_ADDR, READ}, WRITE, 1, 0};
                 queue[3]  <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], READ, 0, 1};
                 queue_len <= QUEUE_WIDTH - 1;
             end
