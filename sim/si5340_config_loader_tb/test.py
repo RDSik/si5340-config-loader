@@ -9,7 +9,7 @@ def test_runner():
     src = Path("../../src")
     
     hdl_toplevel_lang = os.getenv("HDL_TOPLEVEL_LANG", "verilog")
-    sim = os.getenv("SIM", "icarus")
+    sim = os.getenv("SIM", "verilator")
     
     build_dir = Path('sim_si5340_config_loader')
     build_dir.mkdir(exist_ok=True)
