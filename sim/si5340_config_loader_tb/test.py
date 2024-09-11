@@ -22,7 +22,7 @@ def test_runner():
         sources = []
         for (dirpath, dirnames, filenames) in os.walk(path):
             for file in filenames:
-                if file[len(file)-2:len(file)] == '.v':
+                if file[len(file)-2:len(file)] == '.v' or file[len(file)-3:len(file)] == '.sv':
                     sources.append(dirpath.replace("\\", '/') +'/' + file)
             return sources
 
