@@ -60,14 +60,14 @@ module si5340_config_loader #(
         .sda_oen (sda_padoen_o        )
     );
 
-    localparam QUEUE_LEN = 3;
+    localparam QUEUE_WIDTH = 4;
 
     struct packed {
         logic [DATA_WIDTH-1:0] data;
         r_w                    rw;
         logic                  start;
         logic                  stop;
-    } queue [QUEUE_LEN-1:0];
+    } queue [QUEUE_WIDTH-1:0];
 
     enum logic [3:0] {
         IDLE        = 3'b000,
@@ -83,7 +83,8 @@ module si5340_config_loader #(
     logic [$clog2(CYCLES)-1:0     ] cycles_cnt;
     logic [$clog2(PAUSE_NS)-1:0   ] pause_cnt;
     logic [$clog2(WORD_NUMBER)-1:0] mem_index;
-    logic [$clog2(QUEUE_LEN)-1:0  ] queue_index;
+    logic [$clog2(QUEUE_WIDTH)-1:0] queue_index;
+    logic [$clog2(QUEUE_WIDTH)-1:0] queue_len;
 
     logic [MEM_WIDTH-1:0] mem [0:WORD_NUMBER-1]; // [23:8] - addr, [7:0] - data
 
@@ -128,7 +129,7 @@ module si5340_config_loader #(
                     mem_index <= mem_index + 1;
                     state     <= ACK;
                 end
-                QUEUE_INDEX: if (queue_index == QUEUE_LEN - 1) begin 
+                QUEUE_INDEX: if (queue_index == queue_len) begin 
                     queue_index <= 0;
                     state       <= IDLE;
                 end else begin
@@ -155,13 +156,16 @@ module si5340_config_loader #(
     always_ff @(posedge clk_i) begin
         if (state == IDLE && load) begin
             if (write) begin // Write
-                queue[0] <= {{SLAVE_ADDR, WRITE}, WRITE, 1, 0};
-                queue[1] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 0};
-                queue[2] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 1};
+                queue[0]  <= {{SLAVE_ADDR, WRITE}, WRITE, 1, 0};
+                queue[1]  <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 0};
+                queue[2]  <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 1};
+                queue_len <= QUEUE_WIDTH - 2;
             end else begin // Read
-                queue[0] <= {{SLAVE_ADDR, WRITE}, WRITE, 1, 0};
-                queue[1] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 0};
-                queue[2] <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], READ, 0, 1};
+                queue[0]  <= {{SLAVE_ADDR, WRITE}, WRITE, 1, 0};
+                queue[1]  <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], WRITE, 0, 0};
+                queue[2]  <= {{SLAVE_ADDR, WRITE}, WRITE, 1, 0};
+                queue[3]  <= {mem[mem_index][cycles_cnt*DATA_WIDTH +: DATA_WIDTH], READ, 0, 1};
+                queue_len <= QUEUE_WIDTH - 1;
             end
         end
     end
