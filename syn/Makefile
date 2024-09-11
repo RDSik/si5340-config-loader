@@ -31,7 +31,11 @@ SOURCES_VerilogFile := \
 ../src/i2c_master_byte.v \
 ../src/i2c_master_defines.v \
 ../src/timescale.v \
-../src/si5340_config_loader.sv
+
+SOURCES_SVFile := \
+../src/si5340_config_loader.sv \
+../src/i2c_ctrl_if.sv \
+../src/cfg_pkg.svh \
 
 SOURCES_SDCFile := \
 si5340_config_loader.sdc
