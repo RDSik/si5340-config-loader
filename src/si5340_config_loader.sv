@@ -5,7 +5,7 @@
 import cfg_pkg::*;
 
 module si5340_config_loader #(
-    parameter CONFIG_MEM  = "config.mem"
+    parameter CONFIG_MEM = "config.mem"
 ) (
     input logic clk_i,
     input logic arstn_i,
