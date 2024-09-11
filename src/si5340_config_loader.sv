@@ -127,7 +127,7 @@ module si5340_config_loader #(
                     queue_index <= queue_index + 1;
                     state       <= ACK;
                 end
-                STOP: state <= WAIT_ACK;
+                STOP: state <= WAIT_STOP;
                 WAIT_STOP: if (m_i2_ctrl_if.cmd_ack) state <= QUEUE_INDEX;
                 else state <= WAIT_STOP;
                 default: state <= IDLE;
