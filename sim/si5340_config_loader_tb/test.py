@@ -28,7 +28,6 @@ def test_runner():
 
     verilog_sources.extend(files(src))
 
-    
     hdl_toplevel = 'si5340_config_loader' # HDL module name
     test_module = 'si5340_config_loader_tb' # Python module name
     # pre_cmd = ['do ../wave.do'] # Macro file
