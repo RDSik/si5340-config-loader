@@ -11,7 +11,7 @@ syn_project = "si5340_config_loader"
 
 syn_tool = "quartus"
 
-quartus_preflow = "quartus.tcl"
+quartus_preflow = "quartus_preflow.tcl"
 
 files = [
     "quartus.tcl",
