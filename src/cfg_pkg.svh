@@ -1,5 +1,5 @@
-`ifndef CFG_PKG
-`define CFG_PKG
+`ifndef CFG_PKG_SVH
+`define CFG_PKG_SVH
 
 package cfg_pkg;
 
