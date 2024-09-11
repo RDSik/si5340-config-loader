@@ -40,12 +40,4 @@ py config_parser.py .\Si5340-RevD-Si5340-Registers.txt
 
 ## Simulation
 
-### Verilator simulation using cocotb:
-```bash
-py -m venv myenv
-.\myenv\Scripts\activate.ps1
-cd .\sim\cocotb\si5340_config_loader_tb
-py -m pytest test.py
-gtkwave .\sim_build_si5340_config_loader\si5340_config_loader.vcd
-deactivate
-```
+### TBD
