@@ -91,8 +91,8 @@ module si5340_config_loader #(
 
     always_ff @(posedge clk_i or negedge arstn_i) begin
         if (~arstn_i) begin
-            mem_index   <= 0;
             pause_cnt   <= 0;
+            mem_index   <= 0;
             queue_index <= 0;
             queue_len   <= 0;
             queue       <= 0;
