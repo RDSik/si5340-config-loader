@@ -1,6 +1,8 @@
-interface i2_ctrl_if #(
-    parameter DATA_WIDTH = 8
-);
+`include "cfg_pkg.svh"
+
+import cfg_pkg::*;
+
+interface i2_ctrl_if ();
 
     logic [DATA_WIDTH-1:0] din;
     logic [DATA_WIDTH-1:0] dout;
