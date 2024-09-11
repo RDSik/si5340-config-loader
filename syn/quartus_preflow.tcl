@@ -1,3 +1,4 @@
+# SCRIPT EXECUTION STARTS HERE
 post_message "si5340_config_loader design pre-flow script"
 
 set project_name "si5340_config_loader"
