@@ -2,7 +2,7 @@
 
 import cfg_pkg::DATA_WIDTH;
 
-interface i2_ctrl_if ();
+interface i2_ctrl_if;
 
     logic [DATA_WIDTH-1:0] din;
     logic [DATA_WIDTH-1:0] dout;
