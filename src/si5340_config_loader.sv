@@ -113,7 +113,7 @@ module si5340_config_loader #(
                     pause_cnt <= pause_cnt + 1;
                     state     <= PAUSE;
                 end
-                MEM_INDEX: if (mem_index == WORD_NUMBER - 1) begin
+                MEM_INDEX: if (mem_index == MEM_DEPTH - 1) begin
                     mem_index <= 0;
                     state     <= IDLE;
                 end else begin
