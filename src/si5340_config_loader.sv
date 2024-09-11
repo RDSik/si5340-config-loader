@@ -77,7 +77,7 @@ module si5340_config_loader #(
         QUEUE_INDEX = 3'b100,
         MEM_INDEX   = 3'b101,
         STOP        = 3'b110,
-        WAIT_STOP   = 3'b111,
+        WAIT_STOP   = 3'b111
     } state;
 
     logic [$clog2(PAUSE_NS)-1:0   ] pause_cnt;
