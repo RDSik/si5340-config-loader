@@ -40,7 +40,7 @@ py config_parser.py .\Si5340-RevD-Si5340-Registers.txt
 
 ## Simulation
 
-### Icarus simulation using cocotb:
+### Verilator simulation using cocotb:
 ```bash
 py -m venv myenv
 .\myenv\Scripts\activate.ps1
