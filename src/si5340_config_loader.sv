@@ -13,7 +13,7 @@ module si5340_config_loader #(
     input logic write,
 
     // inout wire sda, // SCL-line
-    // inout wire scl  // SDA-line
+    // inout wire scl, // SDA-line
 
     // I2C
     input  scl_pad_i,    // SCL-line input
