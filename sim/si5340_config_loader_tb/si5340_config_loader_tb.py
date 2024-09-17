@@ -26,6 +26,7 @@ async def write(dut, n):
 async def read(dut, n):
     for i in range(n):
         dut.load = 1
+        dut.write = 0
         print(f"Load and Read at {get_sim_time('ns')} ns.")
         await Timer(clk_per*2, units="ns")
         dut.load = 0
