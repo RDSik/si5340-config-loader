@@ -2,9 +2,6 @@ sim/mem_serializer_tb/*
 !test.py
 !mem_serializer_tb.py
 !mem_serializer.v
-sim/i2_master_byte_ctrl_tb/*
-!test.py
-!i2c_master_byte_ctrl_tb.py
 sim/si5340_config_loader_tb/*
 !test.py
 !si5340_config_loader_tb.py
