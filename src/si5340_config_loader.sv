@@ -115,12 +115,10 @@ module si5340_config_loader #(
                     pause_cnt <= pause_cnt + 1;
                     state     <= PAUSE;
                 end
-                MEM_INDEX: if (mem_index == MEM_DEPTH - 1) begin
-                    mem_index <= 0;
-                    state     <= IDLE;
-                end else begin
-                    mem_index <= mem_index + 1;
-                    state     <= IDLE;
+                MEM_INDEX: begin
+                    state <= IDLE;
+                    if (mem_index == MEM_DEPTH - 1) mem_index <= 0;
+                    else mem_index <= mem_index + 1;
                 end
                 QUEUE_INDEX: if (queue_index == queue_len) begin 
                     queue_index <= 0;
