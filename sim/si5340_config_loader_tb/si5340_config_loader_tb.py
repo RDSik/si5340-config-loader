@@ -11,26 +11,39 @@ async def reset(dut, cycles):
     await ClockCycles(dut.clk_i, cycles)
     dut.arstn_i.value = 1
 
-async def write(dut):
-    dut.load = 1
-    dut.write = 1
-    print(f"Load and Write at {get_sim_time('ns')} ns.")
-    await Timer(clk_per*258, units="ns")
-    print(f"Get cmd_ack {get_sim_time('ns')} ns.")
-    await Timer(clk_per*942, units="ns")
+async def write(dut, n):
+    for i in range(n):
+        dut.load = 1
+        dut.write = 1
+        print(f"Load and Write at {get_sim_time('ns')} ns.")
+        await Timer(clk_per*2, units="ns")
+        dut.load = 0
+        dut.write = 0
+        await Timer(clk_per*256, units="ns")
+        print(f"Get cmd_ack at {get_sim_time('ns')} ns.")
+        await Timer(clk_per*750, units="ns")
 
-async def read(dut):
-    dut.load = 1
-    print(f"Load and Read at {get_sim_time('ns')} ns.")
-    await Timer(clk_per*258, units="ns")
-    print(f"Get cmd_ack {get_sim_time('ns')} ns.")
-    await Timer(clk_per*942, units="ns")
+async def read(dut, n):
+    for i in range(n):
+        dut.load = 1
+        print(f"Load and Read at {get_sim_time('ns')} ns.")
+        await Timer(clk_per*2, units="ns")
+        dut.load = 0
+        dut.write = 0
+        await Timer(clk_per*256, units="ns")
+        print(f"Get cmd_ack at {get_sim_time('ns')} ns.")
+        await Timer(clk_per*1300, units="ns")
+
+async def init(dut):
+
+    cocotb.start_soon(Clock(dut.clk_i, clk_per, units = 'ns').start())
+
+    await reset(dut, 2)
+    await read(dut, 1)
+    await write(dut, 1)
 
 @cocotb.test()
 async def test_si5340_config_loader(dut):
-    
-    cocotb.start_soon(Clock(dut.clk_i, clk_per, units = 'ns').start())
 
     #------------------Order of test execution -------------------
-    await reset(dut, 2)
-    await write(dut)
+    await init(dut)
