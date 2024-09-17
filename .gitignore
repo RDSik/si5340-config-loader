@@ -8,3 +8,4 @@ sim/i2_master_byte_ctrl_tb/*
 sim/si5340_config_loader_tb/*
 !test.py
 !si5340_config_loader_tb.py
+!wave.do
