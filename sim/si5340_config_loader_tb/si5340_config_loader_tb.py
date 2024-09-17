@@ -11,6 +11,15 @@ async def reset(dut, cycles):
     await ClockCycles(dut.clk_i, cycles)
     dut.arstn_i.value = 1
 
+async def write(dut):
+    dut.load = 1
+    dut.write = 1
+    await Timer(clk_per*300, units="ns")
+
+async def read(dut):
+    dut.load = 1
+    await Timer(clk_per*300, units="ns")
+
 @cocotb.test()
 async def test_si5340_config_loader(dut):
     
@@ -18,3 +27,4 @@ async def test_si5340_config_loader(dut):
 
     #------------------Order of test execution -------------------
     await reset(dut, 2)
+    await write(dut)
