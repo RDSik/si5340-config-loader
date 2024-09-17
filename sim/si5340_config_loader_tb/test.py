@@ -31,6 +31,7 @@ def test_runner():
     hdl_toplevel = 'si5340_config_loader' # HDL module name
     test_module = 'si5340_config_loader_tb' # Python module name
     pre_cmd = ['do ../wave.do'] # Macro file
+    parameters = {"PAUSE_NS": "10"} # HDL module parameters
 
     runner = get_runner(sim)
     
@@ -47,5 +48,6 @@ def test_runner():
         waves=True,
         gui=True,
         pre_cmd=pre_cmd,
+        parameters=parameters,
     )
     
