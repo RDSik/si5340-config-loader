@@ -49,14 +49,6 @@ add wave -noupdate /si5340_config_loader/i2c_inst/go
 add wave -noupdate /si5340_config_loader/i2c_inst/dcnt
 add wave -noupdate /si5340_config_loader/i2c_inst/cnt_done
 add wave -noupdate /si5340_config_loader/i2c_inst/c_state
-add wave -noupdate /si5340_config_loader/s_i2_ctrl_if/din
-add wave -noupdate /si5340_config_loader/s_i2_ctrl_if/dout
-add wave -noupdate /si5340_config_loader/s_i2_ctrl_if/start
-add wave -noupdate /si5340_config_loader/s_i2_ctrl_if/stop
-add wave -noupdate /si5340_config_loader/s_i2_ctrl_if/read
-add wave -noupdate /si5340_config_loader/s_i2_ctrl_if/write
-add wave -noupdate /si5340_config_loader/s_i2_ctrl_if/ack_in
-add wave -noupdate /si5340_config_loader/s_i2_ctrl_if/cmd_ack
 TreeUpdate [SetDefaultTree]
 WaveRestoreCursors {{Cursor 1} {465000 ps} 0}
 quietly wave cursor active 1
