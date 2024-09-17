@@ -120,7 +120,7 @@ module si5340_config_loader #(
                     state     <= IDLE;
                 end else begin
                     mem_index <= mem_index + 1;
-                    state     <= ACK;
+                    state     <= IDLE;
                 end
                 QUEUE_INDEX: if (queue_index == queue_len) begin 
                     queue_index <= 0;
