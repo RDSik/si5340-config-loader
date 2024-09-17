@@ -9,7 +9,7 @@ def test_runner():
     src = Path("../../src")
     
     hdl_toplevel_lang = os.getenv("HDL_TOPLEVEL_LANG", "verilog")
-    sim = os.getenv("SIM", "verilator")
+    sim = os.getenv("SIM", "questa")
     
     build_dir = Path('sim_si5340_config_loader')
     build_dir.mkdir(exist_ok=True)
@@ -22,7 +22,7 @@ def test_runner():
         sources = []
         for (dirpath, dirnames, filenames) in os.walk(path):
             for file in filenames:
-                if file[len(file)-2:len(file)] == '.v' or file[len(file)-3:len(file)] == '.sv':
+                if file[len(file)-2:len(file)] == '.v' or file[len(file)-3:len(file)] == '.sv' or file[len(file)-4:len(file)] == '.svh':
                     sources.append(dirpath.replace("\\", '/') +'/' + file)
             return sources
 
@@ -30,7 +30,7 @@ def test_runner():
 
     hdl_toplevel = 'si5340_config_loader' # HDL module name
     test_module = 'si5340_config_loader_tb' # Python module name
-    # pre_cmd = ['do ../wave.do'] # Macro file
+    pre_cmd = ['do ../wave.do'] # Macro file
 
     runner = get_runner(sim)
     
@@ -46,6 +46,6 @@ def test_runner():
         test_module=test_module,
         waves=True,
         gui=True,
-        # pre_cmd=pre_cmd,
+        pre_cmd=pre_cmd,
     )
     
