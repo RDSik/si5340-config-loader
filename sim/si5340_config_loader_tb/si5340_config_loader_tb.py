@@ -14,11 +14,17 @@ async def reset(dut, cycles):
 async def write(dut):
     dut.load = 1
     dut.write = 1
-    await Timer(clk_per*300, units="ns")
+    print(f"Load and Write at {get_sim_time('ns')} ns.")
+    await Timer(clk_per*258, units="ns")
+    print(f"Get cmd_ack {get_sim_time('ns')} ns.")
+    await Timer(clk_per*942, units="ns")
 
 async def read(dut):
     dut.load = 1
-    await Timer(clk_per*300, units="ns")
+    print(f"Load and Read at {get_sim_time('ns')} ns.")
+    await Timer(clk_per*258, units="ns")
+    print(f"Get cmd_ack {get_sim_time('ns')} ns.")
+    await Timer(clk_per*942, units="ns")
 
 @cocotb.test()
 async def test_si5340_config_loader(dut):
