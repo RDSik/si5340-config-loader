@@ -40,4 +40,11 @@ py config_parser.py .\Si5340-RevD-Si5340-Registers.txt
 
 ## Simulation
 
-`TBD`
+#### Using cocotb (with 64 bit Python use 64 bit Modelsim):
+```bash
+py -m venv myenv
+.\myenv\Scripts\activate.ps1
+cd .\sim\si5340_config_loader_tb
+py -m pytest test.py
+deactivate
+```
