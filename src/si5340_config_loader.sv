@@ -13,7 +13,7 @@ module si5340_config_loader #(
     input logic write,
 
     // inout wire sda, // SCL-line
-    // inout wire scl, // SDA-line
+    // inout wire scl  // SDA-line
 
     // I2C
     input  scl_pad_i,    // SCL-line input
@@ -21,9 +21,7 @@ module si5340_config_loader #(
     output scl_padoen_o, // SCL-line output enable (active low)
     input  sda_pad_i,    // SDA-line input
     output sda_pad_o,    // SDA-line output (always 1'b0)
-    output sda_padoen_o, // SDA-line output enable (active low)
-
-    i2_ctrl_if.master m_i2_ctrl_if
+    output sda_padoen_o  // SDA-line output enable (active low)
 );
 
     // wire scl_pad_i;    // SCL-line input
@@ -38,20 +36,25 @@ module si5340_config_loader #(
     // assign scl       = scl_padoen_o ? 1'bz : scl_pad_o;
     // assign sda       = sda_padoen_o ? 1'bz : sda_pad_o;
 
+    i2_ctrl_if s_i2_ctrl_if();
+
     i2c_master_byte_ctrl i2c_inst (
         .clk     (clk_i               ),
         .rst     (0                   ),
         .nReset  (arstn_i             ),
         .ena     (1                   ),
         .clk_cnt (CLK_CNT             ),
-        .start   (m_i2_ctrl_if.start  ),
-        .stop    (m_i2_ctrl_if.stop   ),
-        .read    (m_i2_ctrl_if.read   ),
-        .write   (m_i2_ctrl_if.write  ),
-        .ack_in  (m_i2_ctrl_if.ack_in ),
-        .din     (m_i2_ctrl_if.din    ),
-        .dout    (m_i2_ctrl_if.dout   ),
-        .cmd_ack (m_i2_ctrl_if.cmd_ack),
+        .start   (s_i2_ctrl_if.start  ),
+        .stop    (s_i2_ctrl_if.stop   ),
+        .read    (s_i2_ctrl_if.read   ),
+        .write   (s_i2_ctrl_if.write  ),
+        .ack_in  (s_i2_ctrl_if.ack_in ),
+        .din     (s_i2_ctrl_if.din    ),
+        .cmd_ack (s_i2_ctrl_if.cmd_ack),
+        .ack_out (                    ),
+        .i2c_busy(                    ),
+        .i2c_al  (                    ),
+        .dout    (s_i2_ctrl_if.dout   ),
         .scl_i   (scl_pad_i           ),
         .scl_o   (scl_pad_o           ),
         .sda_i   (sda_pad_i           ),
@@ -101,7 +104,7 @@ module si5340_config_loader #(
                 IDLE: if (load) state <= ACK;
                 else state <= IDLE;
                 ACK: state <=  WAIT_ACK;
-                WAIT_ACK: if (m_i2_ctrl_if.cmd_ack) begin
+                WAIT_ACK: if (s_i2_ctrl_if.cmd_ack) begin
                     if (queue[queue_index].stop) state <= STOP;
                     else state <= PAUSE;
                 end
@@ -127,7 +130,7 @@ module si5340_config_loader #(
                     state       <= ACK;
                 end
                 STOP: state <= WAIT_STOP;
-                WAIT_STOP: if (m_i2_ctrl_if.cmd_ack) state <= QUEUE_INDEX;
+                WAIT_STOP: if (s_i2_ctrl_if.cmd_ack) state <= QUEUE_INDEX;
                 else state <= WAIT_STOP;
                 default: state <= IDLE;
             endcase
@@ -135,17 +138,17 @@ module si5340_config_loader #(
     end
 
     always_comb begin
-        m_i2_ctrl_if.din = queue[queue_index].data;
-        if (state == ACK || state == STOP) m_i2_ctrl_if.ack_in = 1;
-        else m_i2_ctrl_if.ack_in = 0;
-        if (state == ACK && queue[queue_index].start) m_i2_ctrl_if.start = 1;
-        else m_i2_ctrl_if.start = 0;
-        if (state == STOP && queue[queue_index].stop) m_i2_ctrl_if.stop = 1;
-        else m_i2_ctrl_if.stop = 0;
-        if (state == ACK && queue[queue_index].rw == READ) m_i2_ctrl_if.read = 1;
-        else m_i2_ctrl_if.read = 0;
-        if (state == ACK && queue[queue_index].rw == WRITE) m_i2_ctrl_if.write = 1;
-        else m_i2_ctrl_if.write = 0;
+        s_i2_ctrl_if.din = queue[queue_index].data;
+        if (state == ACK || state == STOP) s_i2_ctrl_if.ack_in = 1;
+        else s_i2_ctrl_if.ack_in = 0;
+        if (state == ACK && queue[queue_index].start) s_i2_ctrl_if.start = 1;
+        else s_i2_ctrl_if.start = 0;
+        if (state == STOP && queue[queue_index].stop) s_i2_ctrl_if.stop = 1;
+        else s_i2_ctrl_if.stop = 0;
+        if (state == ACK && queue[queue_index].rw == READ) s_i2_ctrl_if.read = 1;
+        else s_i2_ctrl_if.read = 0;
+        if (state == ACK && queue[queue_index].rw == WRITE) s_i2_ctrl_if.write = 1;
+        else s_i2_ctrl_if.write = 0;
     end
 
     always_ff @(posedge clk_i) begin
