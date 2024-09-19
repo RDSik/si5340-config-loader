@@ -88,7 +88,7 @@ module si5340_config_loader #(
     logic [$clog2(QUEUE_WIDTH)-1:0] queue_index;
     logic [$clog2(QUEUE_WIDTH)-1:0] queue_len;
 
-    logic [MEM_WIDTH-1:0] mem [0:MEM_DEPTH-1]; // [23:8] - addr, [7:0] - data
+    logic [MEM_WIDTH-1:0] mem [MEM_DEPTH-1:0]; // [23:8] - addr, [7:0] - data
 
     initial $readmemh(CONFIG_MEM, mem);
 
