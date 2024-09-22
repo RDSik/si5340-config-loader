@@ -2,7 +2,11 @@ sim/mem_serializer_tb/*
 !test.py
 !mem_serializer_tb.py
 !mem_serializer.v
-sim/si5340_config_loader_tb/*
+sim/modelsim/si5340_config_loader_tb/*
 !test.py
 !si5340_config_loader_tb.py
 !wave.do
+sim/verilator/si5340_config_loader_tb/*
+!test.py
+!si5340_config_loader_tb.py
+myenv
