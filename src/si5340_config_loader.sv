@@ -97,7 +97,6 @@ module si5340_config_loader #(
             pause_cnt   <= 0;
             mem_index   <= 0;
             queue_index <= 0;
-            queue_len   <= 0;
             state       <= IDLE;
         end else begin
             case (state)
@@ -150,7 +149,8 @@ module si5340_config_loader #(
     end
 
     always_ff @(posedge clk_i) begin
-        if (state == IDLE && load) begin
+        if (~arstn_i) queue_len <= 0;
+        else if (state == IDLE && load) begin
             if (write) begin // Write
                 queue[0]  <= {{SLAVE_ADDR, WRITE}, WRITE, 1'b1, 1'b0};
                 queue[1]  <= {mem[mem_index][(CYCLES-1)*DATA_WIDTH +: DATA_WIDTH], WRITE, 1'b0, 1'b0}; // [23:16] - addr

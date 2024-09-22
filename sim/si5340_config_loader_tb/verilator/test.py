@@ -27,13 +27,14 @@ def test_runner():
         src / "i2c_master_byte_ctrl.v",
         src / "i2c_master_defines.v",
         src / "timescale.v",
-        src / "si5340_config_loader",
+        "si5340_config_loader",
     ]
 
     hdl_toplevel = 'si5340_config_loader' # HDL module name
     test_module = 'si5340_config_loader_tb' # Python module name
     # pre_cmd = ['do ../wave.do'] # Macro file
-    parameters = {"PAUSE_NS": "10"} # HDL module parameters
+    # parameters = {"PAUSE_NS": "10"} # HDL module parameters
+    build_args = ['--no-timing', '--assert']
 
     runner = get_runner(sim)
     
@@ -42,6 +43,7 @@ def test_runner():
         hdl_toplevel=hdl_toplevel,
         build_dir=build_dir,
         always=True, # Always rebuild project
+        build_args=build_args,
     )
 
     runner.test(
@@ -50,6 +52,6 @@ def test_runner():
         waves=True,
         gui=True,
         # pre_cmd=pre_cmd,
-        parameters=parameters,
+        # parameters=parameters,
     )
     

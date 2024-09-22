@@ -1,6 +1,8 @@
 `ifndef CFG_PKG_SVH
 `define CFG_PKG_SVH
 
+`include "timescale.v"
+
 package cfg_pkg;
 
     parameter [15:0] CLK_CNT = 4;                        // 4x SCL
