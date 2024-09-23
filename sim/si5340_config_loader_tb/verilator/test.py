@@ -27,7 +27,7 @@ def test_runner():
         src / "i2c_master_byte_ctrl.v",
         src / "i2c_master_defines.v",
         src / "timescale.v",
-        "si5340_config_loader",
+        "si5340_config_loader.sv",
     ]
 
     hdl_toplevel = 'si5340_config_loader' # HDL module name
