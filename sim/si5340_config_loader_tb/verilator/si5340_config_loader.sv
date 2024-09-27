@@ -74,8 +74,6 @@ module si5340_config_loader #(
 
     logic [MEM_WIDTH-1:0] mem [MEM_DEPTH-1:0]; // [23:8] - addr, [7:0] - data
 
-    initial $readmemh(CONFIG_MEM, mem);
-
     struct packed {
         logic [DATA_WIDTH-1:0] data;
         r_w                    rw;
@@ -94,6 +92,8 @@ module si5340_config_loader #(
         WAIT_STOP   = 3'b111
     } state;
 
+    initial $readmemh(CONFIG_MEM, mem);
+    
     always_ff @(posedge clk_i or negedge arstn_i) begin
         if (~arstn_i) begin
             pause_cnt   <= 0;
