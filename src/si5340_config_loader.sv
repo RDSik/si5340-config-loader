@@ -64,11 +64,13 @@ module si5340_config_loader #(
     );
 
     localparam QUEUE_WIDTH = 6;
+    localparam QUEUE_LEN   = $clog2(QUEUE_WIDTH);
 
-    logic [$clog2(PAUSE_NS)-1:0   ] pause_cnt;
-    logic [$clog2(MEM_DEPTH)-1:0  ] mem_index;
-    logic [$clog2(QUEUE_WIDTH)-1:0] queue_index;
-    logic [$clog2(QUEUE_WIDTH)-1:0] queue_len;
+    logic [QUEUE_LEN-1:0] queue_index;
+    logic [QUEUE_LEN-1:0] queue_len;
+
+    logic [$clog2(PAUSE_NS)-1:0 ] pause_cnt;
+    logic [$clog2(MEM_DEPTH)-1:0] mem_index;
 
     logic [MEM_WIDTH-1:0] mem [MEM_DEPTH-1:0]; // [23:8] - addr, [7:0] - data
 
