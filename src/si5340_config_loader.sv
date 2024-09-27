@@ -5,7 +5,7 @@
 import cfg_pkg::*;
 
 module si5340_config_loader #(
-    parameter PAUSE_NS = (300 * 1_000_000)/PERIOD_NS // delay 300 msec(300_000_000 ns) and 8 ns period
+    parameter PAUSE_NS = PAUSE_NS
 ) (
     input logic clk_i,
     input logic arstn_i,
