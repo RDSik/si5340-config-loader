@@ -5,7 +5,7 @@
 import cfg_pkg::*;
 
 module si5340_config_loader #(
-    parameter PAUSE_NS = 10 //(300 * 1_000_000)/PERIOD_NS // delay 300 msec(300_000_000 ns) and 8 ns period
+    parameter PAUSE_NS = 10
 ) (
     input logic clk_i,
     input logic arstn_i,
@@ -64,6 +64,17 @@ module si5340_config_loader #(
     );
 
     localparam QUEUE_WIDTH = 6;
+    localparam QUEUE_LEN   = $clog2(QUEUE_WIDTH);
+
+    logic [QUEUE_LEN-1:0] queue_index;
+    logic [QUEUE_LEN-1:0] queue_len;
+
+    logic [$clog2(PAUSE_NS)-1:0 ] pause_cnt;
+    logic [$clog2(MEM_DEPTH)-1:0] mem_index;
+
+    logic [MEM_WIDTH-1:0] mem [MEM_DEPTH-1:0]; // [23:8] - addr, [7:0] - data
+
+    initial $readmemh(CONFIG_MEM, mem);
 
     struct packed {
         logic [DATA_WIDTH-1:0] data;
@@ -82,15 +93,6 @@ module si5340_config_loader #(
         STOP        = 3'b110,
         WAIT_STOP   = 3'b111
     } state;
-
-    logic [$clog2(PAUSE_NS)-1:0   ] pause_cnt;
-    logic [$clog2(MEM_DEPTH)-1:0  ] mem_index;
-    logic [$clog2(QUEUE_WIDTH)-1:0] queue_index;
-    logic [$clog2(QUEUE_WIDTH)-1:0] queue_len;
-
-    logic [MEM_WIDTH-1:0] mem [MEM_DEPTH-1:0]; // [23:8] - addr, [7:0] - data
-
-    initial $readmemh(CONFIG_MEM, mem);
 
     always_ff @(posedge clk_i or negedge arstn_i) begin
         if (~arstn_i) begin
@@ -173,7 +175,7 @@ module si5340_config_loader #(
         initial begin
             $dumpfile ("si5340_config_loader.vcd");
             $dumpvars (0, si5340_config_loader);
-            // #1;
+            #1;
         end
     `endif
 
