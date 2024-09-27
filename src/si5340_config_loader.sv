@@ -65,6 +65,15 @@ module si5340_config_loader #(
 
     localparam QUEUE_WIDTH = 6;
 
+    logic [$clog2(PAUSE_NS)-1:0   ] pause_cnt;
+    logic [$clog2(MEM_DEPTH)-1:0  ] mem_index;
+    logic [$clog2(QUEUE_WIDTH)-1:0] queue_index;
+    logic [$clog2(QUEUE_WIDTH)-1:0] queue_len;
+
+    logic [MEM_WIDTH-1:0] mem [MEM_DEPTH-1:0]; // [23:8] - addr, [7:0] - data
+
+    initial $readmemh(CONFIG_MEM, mem);
+
     struct packed {
         logic [DATA_WIDTH-1:0] data;
         r_w                    rw;
@@ -82,15 +91,6 @@ module si5340_config_loader #(
         STOP        = 3'b110,
         WAIT_STOP   = 3'b111
     } state;
-
-    logic [$clog2(PAUSE_NS)-1:0   ] pause_cnt;
-    logic [$clog2(MEM_DEPTH)-1:0  ] mem_index;
-    logic [$clog2(QUEUE_WIDTH)-1:0] queue_index;
-    logic [$clog2(QUEUE_WIDTH)-1:0] queue_len;
-
-    logic [MEM_WIDTH-1:0] mem [MEM_DEPTH-1:0]; // [23:8] - addr, [7:0] - data
-
-    initial $readmemh(CONFIG_MEM, mem);
 
     always_ff @(posedge clk_i or negedge arstn_i) begin
         if (~arstn_i) begin
