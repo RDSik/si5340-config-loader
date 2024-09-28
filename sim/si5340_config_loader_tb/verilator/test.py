@@ -34,7 +34,7 @@ def test_runner():
     test_module = 'si5340_config_loader_tb' # Python module name
     # pre_cmd = ['do ../wave.do'] # Macro file
     # parameters = {"PAUSE_NS": "10"} # HDL module parameters
-    build_args = ['--no-timing', '--assert']
+    build_args = ['--no-timing', '--assert', '-Wno-MODDUP']
 
     runner = get_runner(sim)
     

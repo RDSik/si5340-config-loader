@@ -175,6 +175,7 @@ module si5340_config_loader #(
         initial begin
             $dumpfile ("si5340_config_loader.vcd");
             $dumpvars (0, si5340_config_loader);
+            // verilator lint_off STMTDLY
             #1;
         end
     `endif
