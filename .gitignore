@@ -1,3 +1,8 @@
+syn/*
+!Makefile
+!Manifest.py
+!quartus_preflow.tcl
+!si5340_config_loader.sdc
 sim/verilator/*
 !si5340_config_loader_tb.py
 !si5340_config_loader.sv
@@ -9,9 +14,4 @@ sim/modelsim/cocotb/*
 sim/modelsim/hdlmake/*
 !Manifest.py
 !wave.do
-syn/*
-!Makefile
-!Manifest.py
-!quartus_preflow.tcl
-!si5340_config_loader.sdc
 myenv
