@@ -6,45 +6,51 @@ from cocotb.utils import get_sim_time
 
 clk_per = 8
 
-async def reset(dut, cycles):
-    dut.arstn_i.value = 0
-    await ClockCycles(dut.clk_i, cycles)
-    dut.arstn_i.value = 1
+class Test:
+    def __init__(self, dut):
+        self.dut = dut
+        dut.arstn_i.setimmediatevalue(0)
+        dut.load_i.setimmediatevalue(0)
+        dut.write_i.setimmediatevalue(0)
+        cocotb.start_soon(Clock(self.dut.clk_i, clk_per, units = 'ns').start())
 
-async def write(dut, n):
-    for i in range(n):
-        dut.load = 1
-        dut.write = 1
-        print(f"Load and Write at {get_sim_time('ns')} ns.")
-        await Timer(clk_per*2, units="ns")
-        dut.load = 0
-        dut.write = 0
-        await Timer(clk_per*256, units="ns")
-        print(f"Get cmd_ack at {get_sim_time('ns')} ns.")
-        await Timer(clk_per*750, units="ns")
+    async def init(self):
+        await self.reset(2)
+        await self.read(1)
+        await self.write(1)
 
-async def read(dut, n):
-    for i in range(n):
-        dut.load = 1
-        dut.write = 0
-        print(f"Load and Read at {get_sim_time('ns')} ns.")
-        await Timer(clk_per*2, units="ns")
-        dut.load = 0
-        dut.write = 0
-        await Timer(clk_per*256, units="ns")
-        print(f"Get cmd_ack at {get_sim_time('ns')} ns.")
-        await Timer(clk_per*1300, units="ns")
+    async def reset(self, cycles):
+        self.dut.arstn_i.value = 0
+        await ClockCycles(self.dut.clk_i, cycles)
+        self.dut.arstn_i.value = 1
 
-async def init(dut):
+    async def write(self, n):
+        for i in range(n):
+            self.dut.load_i = 1
+            self.dut.write_i = 1
+            print(f"Load and Write at {get_sim_time('ns')} ns.")
+            await Timer(clk_per*2, units="ns")
+            self.dut.load_i = 0
+            self.dut.write_i = 0
+            await Timer(clk_per*256, units="ns")
+            print(f"Get cmd_ack at {get_sim_time('ns')} ns.")
+            await Timer(clk_per*750, units="ns")
 
-    cocotb.start_soon(Clock(dut.clk_i, clk_per, units = 'ns').start())
-
-    await reset(dut, 2)
-    await read(dut, 1)
-    await write(dut, 1)
+    async def read(self, n):
+        for i in range(n):
+            self.dut.load_i = 1
+            self.dut.write_i = 0
+            print(f"Load and Read at {get_sim_time('ns')} ns.")
+            await Timer(clk_per*2, units="ns")
+            self.dut.load_i = 0
+            self.dut.write_i = 0
+            await Timer(clk_per*256, units="ns")
+            print(f"Get cmd_ack at {get_sim_time('ns')} ns.")
+            await Timer(clk_per*1300, units="ns")
 
 @cocotb.test()
-async def test_si5340_config_loader(dut):
+async def run_test(dut):
 
     #------------------Order of test execution -------------------
-    await init(dut)
+    tb = Test(dut)
+    await tb.init()
