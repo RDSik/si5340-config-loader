@@ -14,8 +14,8 @@ module si5340_config_loader_tb();
     ) dut (
         .clk_i        (dut_if.clk_i       ),
         .arstn_i      (dut_if.arstn_i     ),
-        .load         (dut_if.load        ),
-        .write        (dut_if.write       ),
+        .load_i       (dut_if.load_i      ),
+        .write_i      (dut_if.write_i     ),
         .scl_pad_i    (dut_if.scl_pad_i   ),
         .scl_pad_o    (dut_if.scl_pad_o   ),
         .scl_padoen_o (dut_if.scl_padoen_o),
@@ -39,7 +39,7 @@ module si5340_config_loader_tb();
     initial begin
         $dumpfile("si5340_config_loader_tb.vcd");
         $dumpvars(0, si5340_config_loader_tb);
-        $monitor("time=%g, load=%b, write=%b", $time, dut_if.load, dut_if.write);
+        $monitor("time=%g, load=%b, write=%b", $time, dut_if.load_i, dut_if.write_i);
     end
     
     initial begin

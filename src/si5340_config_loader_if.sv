@@ -2,8 +2,8 @@ interface si5340_config_loader_if;
 
     bit clk_i;
     bit arstn_i;
-    bit load;
-    bit write;
+    bit load_i;
+    bit write_i;
 
     logic scl_pad_i;
     logic scl_pad_o;

@@ -9,8 +9,8 @@ module si5340_config_loader #(
 ) (
     input logic clk_i,
     input logic arstn_i,
-    input logic load,
-    input logic write,
+    input logic load_i,
+    input logic write_i,
 
     // inout wire sda, // SCL-line
     // inout wire scl  // SDA-line
@@ -102,7 +102,7 @@ module si5340_config_loader #(
             state       <= IDLE;
         end else begin
             case (state)
-                IDLE: if (load) state <= ACK;
+                IDLE: if (load_i) state <= ACK;
                 else state <= IDLE;
                 ACK: state <=  WAIT_ACK;
                 WAIT_ACK: if (s_i2_ctrl_if.cmd_ack) begin
@@ -152,8 +152,8 @@ module si5340_config_loader #(
 
     always_ff @(posedge clk_i) begin
         if (~arstn_i) queue_len <= 0;
-        else if (state == IDLE && load) begin
-            if (write) begin // Write
+        else if (state == IDLE && load_i) begin
+            if (write_i) begin // Write
                 queue[0]  <= {{SLAVE_ADDR, WRITE}, WRITE, 1'b1, 1'b0};
                 queue[1]  <= {mem[mem_index][(CYCLES-1)*DATA_WIDTH +: DATA_WIDTH], WRITE, 1'b0, 1'b0}; // [23:16] - addr
                 queue[2]  <= {mem[mem_index][(CYCLES-2)*DATA_WIDTH +: DATA_WIDTH], WRITE, 1'b0, 1'b0}; // [15:8]  - addr
