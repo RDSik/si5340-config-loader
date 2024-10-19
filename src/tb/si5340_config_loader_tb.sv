@@ -8,9 +8,10 @@ module si5340_config_loader_tb();
 
     localparam CLK_PER  = 8;
     localparam SIM_TIME = 20000;
+    localparam PAUSE_NS = 10;
                                                          
     si5340_config_loader #(
-        .PAUSE_NS (10)
+        .PAUSE_NS (PAUSE_NS)
     ) dut (
         .clk_i        (dut_if.clk_i       ),
         .arstn_i      (dut_if.arstn_i     ),

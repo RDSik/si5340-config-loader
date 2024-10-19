@@ -1,0 +1,22 @@
+# Reading pref.tcl
+# vsim -gui -onfinish stop -pli "C:/Users/dimas/AppData/Roaming/Python/Python312/site-packages/cocotb/libs/cocotbvpi_modelsim.dll" top.si5340_config_loader -do "do ../wave.do" -do "log -recursive /*;" -gPAUSE_NS=10 
+# Start time: 01:05:33 on Oct 20,2024
+# Loading sv_std.std
+# Loading top.cfg_pkg
+# Loading top.si5340_config_loader_sv_unit
+# Loading top.si5340_config_loader
+# Loading top.i2c_ctrl_if_sv_unit
+# Loading top.i2_ctrl_if
+# Loading top.i2c_master_byte_ctrl
+# Loading top.i2c_master_bit_ctrl
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'rst'. The port definition is at: C://Users//dimas//FPGA//si5340-config-loader//src//i2c_master_byte_ctrl.v(76).
+#    Time: 0 ps  Iteration: 0  Instance: /si5340_config_loader/i2c_inst File: C://Users//dimas//FPGA//si5340-config-loader//src//si5340_config_loader.sv Line: 41
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'ena'. The port definition is at: C://Users//dimas//FPGA//si5340-config-loader//src//i2c_master_byte_ctrl.v(76).
+#    Time: 0 ps  Iteration: 0  Instance: /si5340_config_loader/i2c_inst File: C://Users//dimas//FPGA//si5340-config-loader//src//si5340_config_loader.sv Line: 41
+# Loading C:/Users/dimas/AppData/Roaming/Python/Python312/site-packages/cocotb/libs/cocotbvpi_modelsim.dll
+# ** Error: (vsim-3193) Load of "C:/Users/dimas/AppData/Roaming/Python/Python312/site-packages/cocotb/libs/cocotbvpi_modelsim.dll" failed: Bad DLL format.
+# ** Error (suppressible): (vsim-PLI-3002) Failed to load PLI object file "C:/Users/dimas/AppData/Roaming/Python/Python312/site-packages/cocotb/libs/cocotbvpi_modelsim.dll".
+#    Time: 0 ps  Iteration: 0  Root: /
+# Error loading design
+# End time: 01:05:33 on Oct 20,2024, Elapsed time: 0:00:00
+# Errors: 2, Warnings: 2
