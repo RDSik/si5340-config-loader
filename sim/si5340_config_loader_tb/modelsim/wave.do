@@ -2,19 +2,19 @@ onerror {resume}
 quietly WaveActivateNextPane {} 0
 
 add wave -color #ff9911 -radix hex -group TOP \
-add wave -noupdate /si5340_config_loader/clk_i        \
-add wave -noupdate /si5340_config_loader/arstn_i      \
-add wave -noupdate /si5340_config_loader/load         \
-add wave -noupdate /si5340_config_loader/write        \
-add wave -noupdate /si5340_config_loader/scl_pad_i    \
-add wave -noupdate /si5340_config_loader/scl_pad_o    \
-add wave -noupdate /si5340_config_loader/scl_padoen_o \
-add wave -noupdate /si5340_config_loader/sda_pad_i    \
-add wave -noupdate /si5340_config_loader/sda_pad_o    \
-add wave -noupdate /si5340_config_loader/sda_padoen_o \
-add wave -noupdate /si5340_config_loader/state        \
+/si5340_config_loader/clk_i        \
+/si5340_config_loader/arstn_i      \
+/si5340_config_loader/load         \
+/si5340_config_loader/write        \
+/si5340_config_loader/scl_pad_i    \
+/si5340_config_loader/scl_pad_o    \
+/si5340_config_loader/scl_padoen_o \
+/si5340_config_loader/sda_pad_i    \
+/si5340_config_loader/sda_pad_o    \
+/si5340_config_loader/sda_padoen_o \
+/si5340_config_loader/state        \
 
-dd wave -color #cccc00 -radix hex -group CNT`S \
+add wave -color #cccc00 -radix hex -group CNT`S \
 /si5340_config_loader/pause_cnt   \
 /si5340_config_loader/mem_index   \
 /si5340_config_loader/queue_index \
