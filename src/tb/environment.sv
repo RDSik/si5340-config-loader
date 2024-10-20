@@ -1,6 +1,8 @@
 `ifndef _ENV_SV_
 `define _ENV_SV_
 
+`timescale 1ns/10ps
+
 class environment;
 
     localparam CLK_PER = 8;
@@ -11,9 +13,18 @@ class environment;
         this.dut_if = dut_if;
     endfunction
 
+    task init();
+        begin
+            reset();
+            read(1);
+            write(1);
+        end
+    endtask
+
     task reset();
         begin
             dut_if.arstn_i = 0;
+            $display("Reset at %g ns.", $time);
             #CLK_PER;
             dut_if.arstn_i = 1;
         end
@@ -50,14 +61,6 @@ class environment;
                     $display("Get cmd_ack at %g ns.", $time);
                     #(CLK_PER*1300);
                 end
-        end
-    endtask
-
-    task init();
-        begin
-            reset();
-            read(1);
-            write(1);
         end
     endtask
 

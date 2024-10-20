@@ -1,5 +1,5 @@
 `include "environment.sv"
-`timescale 1ns/1ps
+`timescale 1ns/10ps
 
 module si5340_config_loader_tb();
 
@@ -7,7 +7,7 @@ module si5340_config_loader_tb();
     environment env;
 
     localparam CLK_PER  = 8;
-    localparam SIM_TIME = 20000;
+    localparam SIM_TIME = 22000;
     localparam PAUSE_NS = 10;
                                                          
     si5340_config_loader #(
@@ -39,7 +39,7 @@ module si5340_config_loader_tb();
     end
     
     initial begin
-        #SIM_TIME $finish;
+        #SIM_TIME $stop;
     end
 
 endmodule

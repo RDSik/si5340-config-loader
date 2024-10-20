@@ -14,7 +14,7 @@ add wave -color #ff9911 -radix hex -group TOP \
 /si5340_config_loader/sda_padoen_o \
 /si5340_config_loader/state        \
 
-add wave -color #cccc00 -radix hex -group CNT`S \
+add wave -color #cccc00 -radix hex -group OTHERS \
 /si5340_config_loader/pause_cnt   \
 /si5340_config_loader/mem_index   \
 /si5340_config_loader/queue_index \
