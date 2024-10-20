@@ -1,5 +1,4 @@
 `include "environment.sv"
-`timescale 1ns/10ps
 
 module si5340_config_loader_tb();
 
