@@ -6,7 +6,6 @@ module si5340_config_loader_tb();
     environment env;
 
     localparam CLK_PER  = 8;
-    localparam SIM_TIME = 22000;
     localparam PAUSE_NS = 10;
                                                          
     si5340_config_loader #(
@@ -29,16 +28,13 @@ module si5340_config_loader_tb();
     initial begin
         env = new(dut_if);
         env.init();
+        $stop;
     end
 
     initial begin
         $dumpfile("si5340_config_loader_tb.vcd");
         $dumpvars(0, si5340_config_loader_tb);
         $monitor("time=%g, load=%b, write=%b", $time, dut_if.load_i, dut_if.write_i);
-    end
-    
-    initial begin
-        #SIM_TIME $stop;
     end
 
 endmodule
