@@ -49,7 +49,7 @@ py -m pytest test.py
 deactivate
 ```
 
-## Using hdlmake:
+### Using hdlmake:
 ```bash
 cd .\sim\modelsim\hdlmake\
 py -m hdlmake
