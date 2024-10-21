@@ -102,8 +102,10 @@ module si5340_config_loader #(
             state       <= IDLE;
         end else begin
             case (state)
-                IDLE: if (load_i) state <= ACK;
+                IDLE: begin
+                    if (load_i) state <= ACK;
                     else state <= IDLE;
+                end
                 ACK: state <= WAIT_ACK;
                 WAIT_ACK: if (s_i2_ctrl_if.cmd_ack) begin
                     if (queue[queue_index].stop) state <= STOP;
@@ -129,8 +131,10 @@ module si5340_config_loader #(
                     state       <= ACK;
                 end
                 STOP: state <= WAIT_STOP;
-                WAIT_STOP: if (s_i2_ctrl_if.cmd_ack) state <= QUEUE_INDEX;
+                WAIT_STOP: begin
+                    if (s_i2_ctrl_if.cmd_ack) state <= QUEUE_INDEX;
                     else state <= WAIT_STOP;
+                end
                 default: state <= IDLE;
             endcase
         end
