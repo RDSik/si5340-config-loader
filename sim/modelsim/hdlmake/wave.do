@@ -19,6 +19,7 @@ add wave -color #cccc00 -radix hex -group OTHERS \
 /si5340_config_loader_tb/dut/pause_cnt   \
 /si5340_config_loader_tb/dut/mem_index   \
 /si5340_config_loader_tb/dut/state       \
+/si5340_config_loader_tb/dut/queue       \
 
 add wave -color #ee66ff -radix hex -group I2C_CORE \
 /si5340_config_loader_tb/dut/i2c_inst/clk      \
