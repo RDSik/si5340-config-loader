@@ -1,3 +1,6 @@
+import shutil
+from pathlib import Path
+
 action = "simulation"
 sim_tool = "modelsim"
 sim_top = "si5340_config_loader_tb"
@@ -9,3 +12,7 @@ modules = {
         "../../../src/tb/",
     ],
 }
+
+mem_file_path = Path("../../../src")
+
+shutil.copyfile(mem_file_path / 'config.mem', 'config.mem')
