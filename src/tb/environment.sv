@@ -1,5 +1,5 @@
-`ifndef _ENV_SV_
-`define _ENV_SV_
+`ifndef ENV_SV
+`define ENV_SV
 
 `timescale 1ns/10ps
 
