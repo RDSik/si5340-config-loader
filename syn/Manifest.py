@@ -1,10 +1,10 @@
 target = "altera"
 action = "synthesis"
 
-syn_family  = "Cyclone 10 GX"
-syn_device  = "10cx220Y"
-syn_grade   = "E5G"
-syn_package = "F780"
+syn_family  = "Cyclone IV E"
+syn_device  = "EP4CE6"
+syn_grade   = "E22"
+syn_package = "C8N"
 
 syn_top     = "si5340_config_loader"
 syn_project = "si5340_config_loader"
