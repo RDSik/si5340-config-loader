@@ -4,8 +4,8 @@ quietly WaveActivateNextPane {} 0
 add wave -color #ff9911 -radix hex -group TOP \
 /si5340_config_loader/clk_i        \
 /si5340_config_loader/arstn_i      \
-/si5340_config_loader/load         \
-/si5340_config_loader/write        \
+/si5340_config_loader/load_i       \
+/si5340_config_loader/write_i      \
 /si5340_config_loader/scl_pad_i    \
 /si5340_config_loader/scl_pad_o    \
 /si5340_config_loader/scl_padoen_o \
