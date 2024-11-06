@@ -18,15 +18,9 @@ def test_runner():
 
     verilog_sources = []
     
-    def files(path):
-        sources = []
-        for (dirpath, dirnames, filenames) in os.walk(path):
-            for file in filenames:
-                if file[len(file)-2:len(file)] == '.v' or file[len(file)-3:len(file)] == '.sv' or file[len(file)-4:len(file)] == '.svh':
-                    sources.append(dirpath.replace("\\", '/') +'/' + file)
-            return sources
-
-    verilog_sources.extend(files(src))
+    for child in src.iterdir():
+        if child.is_file() and (str(child).endswith('.v') or str(child).endswith('.sv') or str(child).endswith('.svh')):
+            verilog_sources.append(child)
 
     hdl_toplevel = 'si5340_config_loader' # HDL module name
     test_module = 'si5340_config_loader_tb' # Python module name
