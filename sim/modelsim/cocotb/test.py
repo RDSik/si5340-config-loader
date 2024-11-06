@@ -17,11 +17,16 @@ def test_runner():
     shutil.copyfile(src / 'config.mem', build_dir / 'config.mem')
 
     verilog_sources = []
-    
-    for child in src.iterdir():
-        if child.is_file() and (str(child).endswith('.v') or str(child).endswith('.sv') or str(child).endswith('.svh')):
-            verilog_sources.append(child)
 
+    def files(path):
+        sources = []
+        for child in path.iterdir():
+            if child.is_file() and (str(child).endswith('.v') or str(child).endswith('.sv') or str(child).endswith('.svh')):
+                sources.append(child)
+        return sources
+
+    verilog_sources.extend(files(src))
+    
     hdl_toplevel = 'si5340_config_loader' # HDL module name
     test_module = 'si5340_config_loader_tb' # Python module name
     pre_cmd = ['do ../wave.do'] # Macro file
