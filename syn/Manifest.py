@@ -3,8 +3,8 @@ action = "synthesis"
 
 syn_family  = "Cyclone IV E"
 syn_device  = "EP4CE6"
-syn_grade   = "E22"
-syn_package = "C8N"
+syn_grade   = "C8"
+syn_package = "E22"
 
 syn_top     = "si5340_config_loader"
 syn_project = "si5340_config_loader"
