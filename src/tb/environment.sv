@@ -6,6 +6,7 @@
 class environment;
 
     localparam CLK_PER = 8;
+    localparam NUMBER  = 1;
 
     local virtual si5340_config_loader_if dut_if;
 
@@ -16,8 +17,8 @@ class environment;
     task init();
         begin
             reset();
-            read(1);
-            write(1);
+            read();
+            write();
         end
     endtask
 
@@ -30,9 +31,9 @@ class environment;
         end
     endtask
 
-    task write(n);
+    task write();
         begin
-            repeat(n)
+            repeat(NUMBER)
                 begin
                     dut_if.write_i = 1;
                     dut_if.load_i = 1;
@@ -47,9 +48,9 @@ class environment;
         end
     endtask
 
-    task read(n);
+    task read();
         begin
-            repeat(n)
+            repeat(NUMBER)
                 begin
                     dut_if.write_i = 0;
                     dut_if.load_i = 1;

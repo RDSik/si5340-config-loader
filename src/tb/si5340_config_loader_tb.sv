@@ -1,5 +1,6 @@
 `include "environment.sv"
 
+/* verilator lint_off MODDUP */
 module si5340_config_loader_tb();
 
     si5340_config_loader_if dut_if();
@@ -28,7 +29,7 @@ module si5340_config_loader_tb();
     initial begin
         env = new(dut_if);
         env.init();
-        $stop;
+        $finish;
     end
 
     initial begin

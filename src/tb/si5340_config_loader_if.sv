@@ -1,3 +1,4 @@
+/* verilator lint_off MODDUP */
 interface si5340_config_loader_if;
 
     bit clk_i;

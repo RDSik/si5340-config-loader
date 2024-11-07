@@ -1,4 +1,5 @@
-sim/verilator/*
+sim/verilator/config.mem
+sim/verilator/cocotb/*
 !si5340_config_loader_tb.py
 !si5340_config_loader.sv
 !test.py
@@ -15,3 +16,4 @@ syn/*
 !si5340_config_loader.sdc
 myenv
 obj_dir
+*.vcd
