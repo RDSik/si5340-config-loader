@@ -1,7 +1,7 @@
 `ifndef ENV_SV
 `define ENV_SV
 
-`timescale 1ns/10ps
+`include "../timescale.v"
 
 class environment;
 
