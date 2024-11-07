@@ -26,5 +26,5 @@ run:
 
 clean:
 	rm -rf obj_dir
-	rm config.mem
-	rm si5340_config_loader_tb.vcd
+	rm $(MEM_FILE)
+	rm $(TOP_NAME)_tb.vcd
