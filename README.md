@@ -55,3 +55,9 @@ cd .\sim\modelsim\hdlmake\
 py -m hdlmake
 make
 ```
+
+### Using Verilator:
+```bash
+cd ./sim/verilator/
+make
+```
