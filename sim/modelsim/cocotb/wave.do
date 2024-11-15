@@ -1,7 +1,7 @@
 onerror {resume}
 quietly WaveActivateNextPane {} 0
 
-add wave -color #ff9911 -radix hex -group TOP \
+add wave -expand -color #ff9911 -radix hex -group TOP \
 /si5340_config_loader/clk_i        \
 /si5340_config_loader/arstn_i      \
 /si5340_config_loader/load_i       \
@@ -14,14 +14,14 @@ add wave -color #ff9911 -radix hex -group TOP \
 /si5340_config_loader/sda_padoen_o \
 /si5340_config_loader/state        \
 
-add wave -color #cccc00 -radix hex -group OTHERS \
+add wave -expand -color #cccc00 -radix hex -group OTHERS \
 /si5340_config_loader/pause_cnt   \
 /si5340_config_loader/mem_index   \
 /si5340_config_loader/queue_index \
 /si5340_config_loader/queue_len   \
 /si5340_config_loader/queue       \
 
-add wave -color #ee66ff -radix hex -group I2C_CORE \
+add wave -expand -color #ee66ff -radix hex -group I2C_CORE \
 /si5340_config_loader/i2c_inst/clk      \
 /si5340_config_loader/i2c_inst/rst      \
 /si5340_config_loader/i2c_inst/nReset   \
