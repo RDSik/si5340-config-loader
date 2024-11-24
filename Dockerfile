@@ -21,4 +21,5 @@ RUN apt-get update -y && \
 
 COPY . .
 
-RUN make
+RUN make \
+    make run
