@@ -1,7 +1,5 @@
 FROM ubuntu:latest
 
-COPY . .
-
 RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y \
@@ -20,5 +18,7 @@ RUN apt-get update -y && \
     # autoconf && \
     # ./configure && \
     # make install 
+
+COPY . .
 
 RUN make
