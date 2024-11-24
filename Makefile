@@ -14,7 +14,7 @@ SRC_FILES := $(shell find $(SRC_DIR) -name '*.vh')  \
 
 .PHONY: all clean
 
-all: copy_file build run sim
+all: copy_file build execute sim
 
 copy_file:
 	$(shell cp $(SRC_DIR)/$(MEM_FILE) ./)
@@ -22,7 +22,7 @@ copy_file:
 build:
 	verilator --trace --binary $(SRC_FILES) -I$(SRC_DIR) -I$(TB_DIR) --top $(TOP_NAME)_tb
 
-run:
+execute:
 	./obj_dir/V$(TOP_NAME)_tb
 
 sim: 
