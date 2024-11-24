@@ -1,4 +1,3 @@
-sim/verilator/config.mem
 sim/verilator/cocotb/*
 !si5340_config_loader_tb.py
 !si5340_config_loader.sv
