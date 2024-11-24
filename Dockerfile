@@ -1,9 +1,10 @@
-FROM ubuntu:latest
+FROM alpine:latest
 
 COPY . .
 
-RUN apt-get -y update && \
-    apt-get install -y \
+RUN apk update && \
+    apk upgrade && \
+    apk add \
     make \
     g++ \
     git \
