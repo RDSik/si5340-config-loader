@@ -21,6 +21,6 @@ RUN apt-get update -y && \
 
 COPY . .
 
-CMD make
+RUN make build
 
-#RUN ./obj_dir/Vsi5340_config_loader_tb
+RUN make run
