@@ -11,7 +11,8 @@ RUN apt-get -y update && \
     flex \
     gperf \
     libreadline-dev \
-    autoconf
+    autoconf \
+    python3
 
 RUN git clone https://github.com/verilator/verilator && \
     cd verilator && \
