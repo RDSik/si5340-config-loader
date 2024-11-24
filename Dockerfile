@@ -6,8 +6,8 @@ RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y \
     make \
+    g++ \
     verilator
-    # g++ \
     # git \
     # bison \
     # flex \
