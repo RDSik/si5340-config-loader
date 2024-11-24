@@ -5,12 +5,12 @@ RUN apt-get update -y && \
     apt-get install -y \
     make \
     g++ \
-    libreadline-dev \
     verilator
     # git \
     # bison \
     # flex \
     # gperf \
+    # libreadline-dev \
     # autoconf \
 
 # RUN git clone https://github.com/verilator/verilator && \
@@ -21,5 +21,4 @@ RUN apt-get update -y && \
 
 COPY . .
 
-RUN make \
-    make run
+RUN make

@@ -12,9 +12,9 @@ SRC_FILES := $(shell find $(SRC_DIR) -name '*.vh')  \
 			 $(shell find $(TB_DIR) -name '*.v')    \
 			 $(shell find $(TB_DIR) -name '*.sv')
 
-.PHONY: all sim clean
+.PHONY: all clean
 
-all: copy_file build run
+all: copy_file build run sim
 
 copy_file:
 	$(shell cp $(SRC_DIR)/$(MEM_FILE) ./)
