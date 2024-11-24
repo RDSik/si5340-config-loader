@@ -3,7 +3,6 @@ FROM ubuntu:latest
 COPY . .
 
 RUN apt-get update && \
-    apt-get upgrade && \
     apt-get install \
     make \
     g++ \
