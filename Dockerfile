@@ -2,9 +2,9 @@ FROM ubuntu:latest
 
 COPY . .
 
-RUN apk update && \
-    apk upgrade && \
-    apk add \
+RUN apt-get update && \
+    apt-get upgrade && \
+    apt-get install \
     make \
     g++ \
     git \
