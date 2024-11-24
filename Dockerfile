@@ -7,14 +7,13 @@ RUN apt-get update -y && \
     apt-get install -y \
     make \
     g++ \
+    libreadline-dev \
     verilator
     # git \
     # bison \
     # flex \
     # gperf \
-    # libreadline-dev \
     # autoconf \
-    # python3
 
 # RUN git clone https://github.com/verilator/verilator && \
     # cd verilator && \
@@ -22,5 +21,4 @@ RUN apt-get update -y && \
     # ./configure && \
     # make install 
 
-RUN cd ../ && \
-    make
+RUN make
