@@ -43,35 +43,33 @@ class environment;
 
     task write();
         begin
-            repeat(NUMBER)
-                begin
-                    dut_if.write_i = 1;
-                    dut_if.load_i = 1;
-                    $display("Load and Write at %g ns.", $time);
-                    #(CLK_PER*2);
-                    dut_if.write_i = 0;
-                    dut_if.load_i = 0;
-                    #(CLK_PER*256);
-                    $display("Get cmd_ack at %g ns.", $time);
-                    #(CLK_PER*750);
-                end
+            repeat(NUMBER) begin
+                dut_if.write_i = 1;
+                dut_if.load_i = 1;
+                $display("Load and Write at %g ns.", $time);
+                #(CLK_PER*2);
+                dut_if.write_i = 0;
+                dut_if.load_i = 0;
+                #(CLK_PER*256);
+                $display("Get cmd_ack at %g ns.", $time);
+                #(CLK_PER*750);
+            end
         end
     endtask
 
     task read();
         begin
-            repeat(NUMBER)
-                begin
-                    dut_if.write_i = 0;
-                    dut_if.load_i = 1;
-                    $display("Load and Read at %g ns.", $time);
-                    #(CLK_PER*2);
-                    dut_if.write_i = 0;
-                    dut_if.load_i = 0;
-                    #(CLK_PER*256);
-                    $display("Get cmd_ack at %g ns.", $time);
-                    #(CLK_PER*1300);
-                end
+            repeat(NUMBER) begin
+                dut_if.write_i = 0;
+                dut_if.load_i = 1;
+                $display("Load and Read at %g ns.", $time);
+                #(CLK_PER*2);
+                dut_if.write_i = 0;
+                dut_if.load_i = 0;
+                #(CLK_PER*256);
+                $display("Get cmd_ack at %g ns.", $time);
+                #(CLK_PER*1300);
+            end
         end
     endtask
 
