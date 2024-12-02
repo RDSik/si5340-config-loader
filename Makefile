@@ -1,4 +1,6 @@
 TOP_NAME  := si5340_config_loader
+VERILATOR := verilator
+GTKWAVE   := gtkwave
 SRC_DIR   := src
 TB_DIR    := src/tb
 MEM_FILE  := config.mem
@@ -20,13 +22,13 @@ copy_file:
 	$(shell cp $(SRC_DIR)/$(MEM_FILE) ./)
 
 build:
-	verilator --trace --binary $(SRC_FILES) -I$(SRC_DIR) -I$(TB_DIR) --top $(TOP_NAME)_tb
+	$(VERILATOR) --trace --binary $(SRC_FILES) -I$(SRC_DIR) -I$(TB_DIR) --top $(TOP_NAME)_tb
 
 execute:
 	./obj_dir/V$(TOP_NAME)_tb
 
 sim: 
-	gtkwave $(GTKW_FILE)
+	$(GTKWAVE) $(GTKW_FILE)
 
 clean:
 	rm -rf obj_dir
