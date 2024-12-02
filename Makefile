@@ -1,8 +1,8 @@
-TOP_NAME := si5340_config_loader
-SRC_DIR  := src
-TB_DIR   := src/tb
-MEM_FILE := config.mem
-GTK_FILE := gtkw.gtkw
+TOP_NAME  := si5340_config_loader
+SRC_DIR   := src
+TB_DIR    := src/tb
+MEM_FILE  := config.mem
+GTKW_FILE := gtkw.gtkw
 SRC_FILES := $(shell find $(SRC_DIR) -name '*.vh')  \
 			 $(shell find $(SRC_DIR) -name '*.svh') \
 			 $(shell find $(SRC_DIR) -name '*.v')   \
@@ -26,7 +26,7 @@ execute:
 	./obj_dir/V$(TOP_NAME)_tb
 
 sim: 
-	gtkwave $(GTK_FILE)
+	gtkwave $(GTKW_FILE)
 
 clean:
 	rm -rf obj_dir
