@@ -1,13 +1,11 @@
-#FROM ubuntu:latest
+FROM ubuntu:latest
 
-FROM verilator:latest
-
-# RUN apt-get update -y && \
-    # apt-get upgrade -y && \
-    # apt-get install -y \
-    # make \
-    # g++ \
-    # verilator
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y \
+    make \
+    g++ \
+    verilator
     # git \
     # bison \
     # flex \
