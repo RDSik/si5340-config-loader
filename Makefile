@@ -30,5 +30,4 @@ sim:
 
 clean:
 	rm -rf obj_dir
-	rm $(MEM_FILE)
-	rm $(TOP_NAME)_tb.vcd
+	rm $(MEM_FILE) $(TOP_NAME)_tb.vcd
