@@ -24,6 +24,8 @@ module si5340_config_loader_tb();
         .sda_padoen_o (dut_if.sda_padoen_o)
     );
 
+    always #(CLK_PER/2) dut_if.clk_i = ~dut_if.clk_i;
+
     initial begin
         env = new(dut_if);
         env.init();
