@@ -16,3 +16,4 @@ syn/*
 myenv
 obj_dir
 *.vcd
+*.v.bak
