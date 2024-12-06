@@ -5,7 +5,8 @@ RUN apt-get update -y && \
     apt-get install -y \
     make \
     g++ \
-    verilator
+    verilator \
+    gtkwave
     # git \
     # bison \
     # flex \
