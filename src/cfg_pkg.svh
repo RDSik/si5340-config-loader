@@ -7,7 +7,6 @@ package cfg_pkg;
 
     parameter [15:0] CLK_CNT = 4; // 4x SCL
 
-    parameter CONFIG_MEM = "config.mem";
     parameter MEM_DEPTH  = 326;
     parameter MEM_WIDTH  = 24;
     parameter DATA_WIDTH = 8;
