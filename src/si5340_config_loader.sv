@@ -2,8 +2,6 @@
 
 `include "cfg_pkg.svh"
 
-import cfg_pkg::*;
-
 module si5340_config_loader 
     import cfg_pkg::*;
 #(
