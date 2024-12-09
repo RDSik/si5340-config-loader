@@ -16,21 +16,12 @@ class environment;
 
     task init();
         begin
-            // clock();
+            dut_if.clk_i = 0;
             reset();
             read();
             write();
         end
     endtask
-
-    // task clock();
-        // begin
-            // dut_if.clk_i = 0;
-            // forever begin
-                // #(CLK_PER/2) dut_if.clk_i = ~dut_if.clk_i;
-            // end
-        // end
-    // endtask
     
     task reset();
         begin
