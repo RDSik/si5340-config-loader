@@ -16,7 +16,7 @@ SRC_FILES := $(shell find $(SRC_DIR) -name '*.vh')  \
 
 .PHONY: all clean
 
-all: copy_file build execute sim
+all: copy_file build execute simulate
 
 copy_file:
 	$(shell cp $(SRC_DIR)/$(MEM_FILE) ./)
@@ -27,7 +27,7 @@ build:
 execute:
 	./obj_dir/V$(TOP_NAME)_tb
 
-sim: 
+simulate: 
 	$(GTKWAVE) $(GTKW_FILE)
 
 clean:
