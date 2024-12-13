@@ -27,8 +27,10 @@ module si5340_config_loader_tb();
     always #(CLK_PER/2) dut_if.clk_i = ~dut_if.clk_i;
 
     initial begin
-        env = new(dut_if);
-        env.init();
+        fork 
+            env = new(dut_if);
+            env.init();
+        join
         $finish;
     end
 
