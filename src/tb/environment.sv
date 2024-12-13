@@ -26,7 +26,7 @@ class environment;
     task reset();
         begin
             dut_if.arstn_i = 0;
-            $display("-----------------------------------------\n");
+            $display("-----------------------------------------");
             $display("Reset at %g ns.", $time);
             $display("-----------------------------------------\n");
             #CLK_PER;
@@ -39,14 +39,12 @@ class environment;
             repeat(NUMBER) begin
                 dut_if.write_i = 1;
                 dut_if.load_i = 1;
-                $display("-----------------------------------------\n");
                 $display("Load and Write at %g ns.", $time);
                 $display("-----------------------------------------\n");
                 #(CLK_PER*2);
                 dut_if.write_i = 0;
                 dut_if.load_i = 0;
                 #(CLK_PER*256);
-                $display("-----------------------------------------\n");
                 $display("Get cmd_ack at %g ns.", $time);
                 $display("-----------------------------------------\n");
                 #(CLK_PER*750);
@@ -59,14 +57,12 @@ class environment;
             repeat(NUMBER) begin
                 dut_if.write_i = 0;
                 dut_if.load_i = 1;
-                $display("-----------------------------------------\n");
                 $display("Load and Read at %g ns.", $time);
                 $display("-----------------------------------------\n");
                 #(CLK_PER*2);
                 dut_if.write_i = 0;
                 dut_if.load_i = 0;
                 #(CLK_PER*256);
-                $display("-----------------------------------------\n");
                 $display("Get cmd_ack at %g ns.", $time);
                 $display("-----------------------------------------\n");
                 #(CLK_PER*1300);
