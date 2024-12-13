@@ -13,7 +13,7 @@ RUN apt-get update -y && \
     flex \
     bison \
     ccache \
-    ibgoogle-perftools-dev \
+    libgoogle-perftools-dev \
     numactl \
     perl-doc\
     gtkwave 
