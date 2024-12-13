@@ -3,23 +3,27 @@ FROM ubuntu:latest
 RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y \
+    git \
+    help2man \
+    perl \
+    python3 \
     make \
+    autoconf \
     g++ \
-    verilator \
-    gtkwave
-    # git \
-    # bison \
-    # flex \
-    # gperf \
-    # libreadline-dev \
-    # autoconf \
-    # python3
-
-# RUN git clone https://github.com/verilator/verilator && \
-    # cd verilator && \
-    # autoconf && \
-    # ./configure && \
-    # make install 
+    flex \
+    bison \
+    ccashe \
+    ibgoogle-perftools-dev \
+    numactl \
+    perl-doc\
+    gtkwave 
+    
+RUN git clone https://github.com/verilator/verilator && \
+    cd verilator && \
+    autoconf && \
+    ./configure && \
+    make -j `nproc` && \
+    make install 
 
 COPY . .
 
