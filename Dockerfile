@@ -12,7 +12,7 @@ RUN apt-get update -y && \
     g++ \
     flex \
     bison \
-    ccashe \
+    ccache \
     ibgoogle-perftools-dev \
     numactl \
     perl-doc\
