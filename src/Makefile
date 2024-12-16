@@ -1,9 +1,8 @@
 TOP_NAME  := si5340_config_loader
 VERILATOR := verilator
 GTKWAVE   := gtkwave
-SRC_DIR   := src
-TB_DIR    := src/tb
-MEM_FILE  := config.mem
+SRC_DIR   := ./
+TB_DIR    := tb/
 GTKW_FILE := gtkw.gtkw
 SRC_FILES := $(shell find $(SRC_DIR) -name '*.vh')  \
 			 $(shell find $(SRC_DIR) -name '*.svh') \
@@ -16,10 +15,7 @@ SRC_FILES := $(shell find $(SRC_DIR) -name '*.vh')  \
 
 .PHONY: all clean
 
-all: copy_file build execute simulate
-
-copy_file:
-	$(shell cp $(SRC_DIR)/$(MEM_FILE) ./)
+all: build execute simulate
 
 build:
 	$(VERILATOR) --trace --binary $(SRC_FILES) -I$(SRC_DIR) -I$(TB_DIR) --top $(TOP_NAME)_tb
@@ -32,4 +28,4 @@ simulate:
 
 clean:
 	rm -rf obj_dir
-	rm $(MEM_FILE) $(TOP_NAME)_tb.vcd
+	rm $(TOP_NAME)_tb.vcd
