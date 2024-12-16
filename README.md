@@ -58,6 +58,6 @@ make
 
 ### Using Verilator:
 ```bash
-cd ./sim/verilator/
+cd src
 make
 ```
