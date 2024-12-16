@@ -1,5 +1,3 @@
-// Status: Testing
-
 `include "cfg_pkg.svh"
 
 module si5340_config_loader 
