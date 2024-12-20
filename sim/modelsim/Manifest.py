@@ -13,6 +13,6 @@ modules = {
     ],
 }
 
-mem_file_path = Path("../../../src")
+mem_file_path = Path("../../src")
 
 shutil.copyfile(mem_file_path / 'config.mem', 'config.mem')

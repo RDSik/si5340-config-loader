@@ -51,14 +51,14 @@ py config_parser.py .\Si5340-RevD-Si5340-Registers.txt
 ```bash
 py -m venv myenv
 .\myenv\Scripts\activate.ps1
-cd .\sim\modelsim\cocotb
+cd .\sim\cocotb
 py -m pytest test.py
 deactivate
 ```
 
 ### Using hdlmake:
 ```bash
-cd .\sim\modelsim\hdlmake\
+cd .\sim\modelsim\
 py -m hdlmake
 make
 ```

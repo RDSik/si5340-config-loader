@@ -2,11 +2,11 @@ sim/verilator/*
 !si5340_config_loader_tb.py
 !si5340_config_loader.sv
 !test.py
-sim/modelsim/cocotb/*
+sim/cocotb/*
 !test.py
 !si5340_config_loader_tb.py
 !wave.do
-sim/modelsim/hdlmake/*
+sim/modelsim/*
 !Manifest.py
 !wave.do
 syn/*
