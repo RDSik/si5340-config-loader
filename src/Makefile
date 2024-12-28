@@ -18,7 +18,7 @@ SRC_FILES := $(shell find $(SRC_DIR) -name '*.vh')  \
 all: build execute simulate
 
 build:
-	$(VERILATOR) --trace --binary $(SRC_FILES) -I$(SRC_DIR) -I$(TB_DIR) --top $(TOP_NAME)_tb
+	$(VERILATOR) --binary $(SRC_FILES) --trace --trace-params --trace-structs -I$(SRC_DIR) -I$(TB_DIR) --top $(TOP_NAME)_tb
 
 execute:
 	./obj_dir/V$(TOP_NAME)_tb

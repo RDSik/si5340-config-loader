@@ -341,5 +341,6 @@ module i2c_master_byte_ctrl (
 	            end
 
 	      endcase
+		  // verilator lint_on CASEINCOMPLETE
 	  end
 endmodule

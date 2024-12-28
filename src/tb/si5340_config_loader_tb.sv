@@ -2,6 +2,7 @@
 
 /* verilator lint_off MODDUP */
 module si5340_config_loader_tb();
+/* verilator lint_on MODDUP */
 
     si5340_config_loader_if dut_if();
     environment env;
