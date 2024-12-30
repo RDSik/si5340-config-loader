@@ -14,34 +14,31 @@ class environment;
         this.dut_if = dut_if;
     endfunction
 
-    task init();
-        begin
-            dut_if.clk_i = 0;
-            reset();
-            read();
-            write();
-        end
-    endtask
-    
-    task reset();
+    task rst_gen();
         begin
             dut_if.arstn_i = 0;
-            $display("-----------------------------------------");
-            $display("Reset at %g ns.", $time);
-            $display("-----------------------------------------\n");
             #CLK_PER;
             dut_if.arstn_i = 1;
         end
     endtask
 
-    task write();
+    task run();
+        begin        
+            dut_if.clk_i = 0;
+            rst_gen();
+            rd_gen();
+            wr_gen();
+        end
+    endtask
+
+    task wr_gen();
         begin
             repeat(NUMBER) begin
                 dut_if.write_i = 1;
                 dut_if.load_i = 1;
                 $display("Load and Write at %g ns.", $time);
                 $display("-----------------------------------------");
-                #(CLK_PER*2);
+                @(posedge dut_if.clk_i);
                 dut_if.write_i = 0;
                 dut_if.load_i = 0;
                 #(CLK_PER*256);
@@ -52,14 +49,14 @@ class environment;
         end
     endtask
 
-    task read();
+    task rd_gen();
         begin
             repeat(NUMBER) begin
                 dut_if.write_i = 0;
                 dut_if.load_i = 1;
                 $display("Load and Read at %g ns.", $time);
                 $display("-----------------------------------------");
-                #(CLK_PER*2);
+                @(posedge dut_if.clk_i);
                 dut_if.write_i = 0;
                 dut_if.load_i = 0;
                 #(CLK_PER*256);

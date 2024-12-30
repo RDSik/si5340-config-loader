@@ -7,7 +7,6 @@ sim/cocotb/*
 !si5340_config_loader_tb.py
 !wave.do
 sim/modelsim/*
-!Manifest.py
 !wave.do
 syn/*
 !Manifest.py

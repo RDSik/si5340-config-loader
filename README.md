@@ -56,11 +56,11 @@ py -m pytest test.py
 deactivate
 ```
 
-### Using hdlmake:
+### Using macrofile:
 ```bash
 cd .\sim\modelsim\
-py -m hdlmake
-make
+vsim
+do wave.do
 ```
 
 ### Using Verilator:

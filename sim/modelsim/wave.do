@@ -1,6 +1,23 @@
-onerror {resume}
-quietly WaveActivateNextPane {} 0
+vlib work
+vmap work
 
+vlog ../../src/tb/si5340_config_loader_tb.sv
+vlog ../../src/tb/si5340_config_loader_if.sv
+vlog ../../src/tb/environment.sv
+vlog ../../src/i2c_master_bit_ctrl.v
+vlog ../../src/i2c_master_byte_ctrl.v
+vlog ../../src/i2c_master_defines.v
+vlog ../../src/timescale.v
+vlog ../../src/si5340_config_loader.sv
+vlog ../../src/i2c_ctrl_if.sv
+vlog ../../src/cfg_pkg.svh
+
+vsim -voptargs="+acc" si5340_config_loader_tb
+add log -r /*
+
+###############################
+# Add signals to time diagram #
+###############################
 add wave -expand -color #ff9911 -radix hex -group TOP \
 /si5340_config_loader_tb/dut/clk_i        \
 /si5340_config_loader_tb/dut/arstn_i      \
