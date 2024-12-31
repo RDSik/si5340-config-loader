@@ -2,16 +2,17 @@
 
 /* verilator lint_off MODDUP */
 module si5340_config_loader_tb();
-/* verilator lint_on MODDUP */
 
     si5340_config_loader_if dut_if();
     environment env;
 
     localparam CLK_PER  = 8;
     localparam PAUSE_NS = 10;
-                                                         
+    localparam CONFIG_MEM = "../config.mem";
+    
     si5340_config_loader #(
-        .PAUSE_NS (PAUSE_NS)
+        .CONFIG_MEM (CONFIG_MEM),
+        .PAUSE_NS   (PAUSE_NS  )
     ) dut (
         .clk_i        (dut_if.clk_i       ),
         .arstn_i      (dut_if.arstn_i     ),
@@ -38,7 +39,6 @@ module si5340_config_loader_tb();
     initial begin
         $dumpfile("si5340_config_loader_tb.vcd");
         $dumpvars(0, si5340_config_loader_tb);
-        // $monitor("time=%g, load=%b, write=%b", $time, dut_if.load_i, dut_if.write_i);
     end
 
 endmodule

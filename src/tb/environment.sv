@@ -2,11 +2,9 @@
 `define ENV_SV
 
 `include "../timescale.v"
-
 class environment;
 
-    localparam CLK_PER = 8;
-    localparam NUMBER  = 1;
+    localparam NUMBER = 1;
 
     local virtual si5340_config_loader_if dut_if;
 
@@ -17,7 +15,7 @@ class environment;
     task rst_gen();
         begin
             dut_if.arstn_i = 0;
-            #CLK_PER;
+            @(posedge dut_if.clk_i);
             dut_if.arstn_i = 1;
         end
     endtask
@@ -41,10 +39,10 @@ class environment;
                 @(posedge dut_if.clk_i);
                 dut_if.write_i = 0;
                 dut_if.load_i = 0;
-                #(CLK_PER*256);
+                repeat (256) @(posedge dut_if.clk_i);
                 $display("Get cmd_ack at %g ns.", $time);
                 $display("-----------------------------------------");
-                #(CLK_PER*750);
+                repeat (750) @(posedge dut_if.clk_i);
             end
         end
     endtask
@@ -59,10 +57,10 @@ class environment;
                 @(posedge dut_if.clk_i);
                 dut_if.write_i = 0;
                 dut_if.load_i = 0;
-                #(CLK_PER*256);
+                repeat (256) @(posedge dut_if.clk_i);
                 $display("Get cmd_ack at %g ns.", $time);
                 $display("-----------------------------------------");
-                #(CLK_PER*1300);
+                repeat (1300) @(posedge dut_if.clk_i);
             end
         end
     endtask

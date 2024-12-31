@@ -1,16 +1,16 @@
 vlib work
 vmap work
 
-vlog ../../src/tb/si5340_config_loader_tb.sv
-vlog ../../src/tb/si5340_config_loader_if.sv
-vlog ../../src/tb/environment.sv
-vlog ../../src/i2c_master_bit_ctrl.v
-vlog ../../src/i2c_master_byte_ctrl.v
-vlog ../../src/i2c_master_defines.v
-vlog ../../src/timescale.v
-vlog ../../src/si5340_config_loader.sv
-vlog ../../src/i2c_ctrl_if.sv
-vlog ../../src/cfg_pkg.svh
+vlog si5340_config_loader_tb.sv
+vlog si5340_config_loader_if.sv
+vlog environment.sv
+vlog ../i2c_master_bit_ctrl.v
+vlog ../i2c_master_byte_ctrl.v
+vlog ../i2c_master_defines.v
+vlog ../timescale.v
+vlog ../si5340_config_loader.sv
+vlog ../i2c_ctrl_if.sv
+vlog ../cfg_pkg.svh
 
 vsim -voptargs="+acc" si5340_config_loader_tb
 add log -r /*
@@ -72,25 +72,6 @@ add wave -expand -color #ee66ff -radix hex -group I2C_CORE \
 /si5340_config_loader_tb/dut/i2c_inst/dcnt     \
 /si5340_config_loader_tb/dut/i2c_inst/cnt_done \
 /si5340_config_loader_tb/dut/i2c_inst/c_state  \
-
-TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {7650915 ps} 0}
-quietly wave cursor active 1
-configure wave -namecolwidth 267
-configure wave -valuecolwidth 100
-configure wave -justifyvalue left
-configure wave -signalnamewidth 0
-configure wave -snapdistance 10
-configure wave -datasetprefix 0
-configure wave -rowmargin 4
-configure wave -childrowmargin 2
-configure wave -gridoffset 0
-configure wave -gridperiod 1
-configure wave -griddelta 40
-configure wave -timeline 0
-configure wave -timelineunits ns
-update
-WaveRestoreZoom {0 ps} {21 us}
 
 run -all
 wave zoom full

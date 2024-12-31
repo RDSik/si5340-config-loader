@@ -1,12 +1,6 @@
-sim/verilator/*
-!si5340_config_loader_tb.py
-!si5340_config_loader.sv
-!test.py
-sim/cocotb/*
+sim/*
 !test.py
 !si5340_config_loader_tb.py
-!wave.do
-sim/modelsim/*
 !wave.do
 syn/*
 !Manifest.py
@@ -16,3 +10,5 @@ myenv
 obj_dir
 *.vcd
 *.v.bak
+*.wlf
+transcript

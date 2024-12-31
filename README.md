@@ -58,7 +58,7 @@ deactivate
 
 ### Using macrofile:
 ```bash
-cd .\sim\modelsim\
+cd .\src\tb\
 vsim
 do wave.do
 ```
