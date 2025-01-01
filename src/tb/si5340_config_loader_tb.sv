@@ -33,7 +33,11 @@ module si5340_config_loader_tb();
             env = new(dut_if);
             env.run();        
         join
+        `ifdef VERILATOR
         $finish;
+        `else
+        $stop;
+        `endif
     end
 
     initial begin
