@@ -22,10 +22,6 @@ SRC_FILES += $(SRC_DIR)i2c_master_byte_ctrl.v
 SRC_FILES += $(SRC_DIR)i2c_master_defines.v
 SRC_FILES += $(SRC_DIR)timescale.v
 
-SRC_FILES += $(SRC_DIR)axis_fir_filter.sv
-SRC_FILES += $(SRC_DIR)acc_reg.sv
-SRC_FILES += $(SRC_DIR)sin_gen.sv
-
 .PHONY: all clean
 
 all: mem_gen build run wave
