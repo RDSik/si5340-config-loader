@@ -31,7 +31,7 @@ SRC_FILES += $(SRC_DIR)sin_gen.sv
 all: mem_gen build run wave
 
 mem_gen:
-	$(PYTHON) $(TB_DIR)$(PARSER) $(TB_DIR)$(CONFIG_FILE)
+	$(PYTHON) $(SRC_DIR)$(PARSER) $(SRC_DIR)$(CONFIG_FILE)
 
 build:
 ifeq ($(SIM), verilator)
