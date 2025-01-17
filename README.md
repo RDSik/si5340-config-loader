@@ -39,12 +39,6 @@ pip install pytest
 winget install GnuWin32.make
 ```
 
-## Create config.mem file
-```bash
-cd src
-py config_parser.py .\Si5340-RevD-Si5340-Registers.txt
-```
-
 ## Simulation
 
 #### Using cocotb (with 64 bit Python use 64 bit Modelsim):
@@ -56,15 +50,8 @@ py -m pytest test.py
 deactivate
 ```
 
-### Using macrofile:
+### Using make:
 ```bash
-cd .\src\tb\
-vsim
-do wave.do
-```
-
-### Using Verilator:
-```bash
-cd src
+cd .\src
 make
 ```
