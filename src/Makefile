@@ -2,7 +2,7 @@ TOP := si5340_config_loader
 
 SIM        ?= verilator
 WAVE       := gtkwave
-MACRO_FILE := $(TB_DIR)wave.do
+MACRO_FILE := wave.do
 
 PARSER      := config_parser.py
 PYTHON      := python3
@@ -39,7 +39,7 @@ ifeq ($(SIM), verilator)
 else ifeq ($(SIM), iverilog)
 	$(SIM) -o $(TOP_NAME) $(SRC_FILES)
 else ifeq ($(SIM), questa)
-	vsim -do $(MACRO_FILE)
+	vsim -do $(TB_DIR)$(MACRO_FILE)
 endif
 
 run:
