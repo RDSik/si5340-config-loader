@@ -40,6 +40,7 @@ else ifeq ($(SIM), iverilog)
 	$(SIM) -o $(TOP_NAME) $(SRC_FILES)
 else ifeq ($(SIM), questa)
 	vsim -do $(MACRO_FILE)
+endif
 
 run:
 ifeq ($(SIM), verilator)
