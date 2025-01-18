@@ -33,7 +33,7 @@ build:
 ifeq ($(SIM), verilator)
 	$(SIM) --binary $(SRC_FILES) --trace -I$(SRC_DIR) -I$(TB_DIR) --top $(TOP)_tb
 else ifeq ($(SIM), iverilog)
-	$(SIM) -o $(TOP_NAME) $(SRC_FILES)
+	$(SIM) -o $(TOP) $(SRC_FILES)
 else ifeq ($(SIM), questa)
 	vsim -do $(TB_DIR)$(MACRO_FILE)
 endif
@@ -42,7 +42,7 @@ run:
 ifeq ($(SIM), verilator)
 	./obj_dir/V$(TOP)_tb
 else ifeq ($(SIM), iverilog)
-	vvp $(TOP_NAME)
+	vvp $(TOP)
 endif
 
 wave: 
