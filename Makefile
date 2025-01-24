@@ -32,7 +32,7 @@ build:
 ifeq ($(SIM), verilator)
 	$(SIM) --binary $(SRC_FILES) --trace -I$(SRC_DIR) -I$(TB_DIR) --top $(TOP)_tb
 else ifeq ($(SIM), iverilog)
-	$(SIM) -o $(TOP) $(SRC_FILES)
+	$(SIM) -g2005-sv -o $(TOP) $(SRC_FILES)
 else ifeq ($(SIM), questa)
 	vsim -do $(TB_DIR)$(MACRO_FILE)
 endif
