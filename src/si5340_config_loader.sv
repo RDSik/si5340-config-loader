@@ -35,31 +35,39 @@ module si5340_config_loader
     // assign scl       = scl_padoen_o ? 1'bz : scl_pad_o;
     // assign sda       = sda_padoen_o ? 1'bz : sda_pad_o;
 
-    i2_ctrl_if s_i2_ctrl_if();
+    logic [DATA_WIDTH-1:0] din;
+    logic [DATA_WIDTH-1:0] dout;
+    
+    logic start;
+    logic stop;
+    logic read;
+    logic write;
+    logic ack_in;
+    logic cmd_ack;
 
     i2c_master_byte_ctrl i2c_inst (
-        .clk     (clk_i               ),
-        .rst     (0                   ),
-        .nReset  (arstn_i             ),
-        .ena     (1                   ),
-        .clk_cnt (CLK_CNT             ),
-        .start   (s_i2_ctrl_if.start  ),
-        .stop    (s_i2_ctrl_if.stop   ),
-        .read    (s_i2_ctrl_if.read   ),
-        .write   (s_i2_ctrl_if.write  ),
-        .ack_in  (s_i2_ctrl_if.ack_in ),
-        .din     (s_i2_ctrl_if.din    ),
-        .cmd_ack (s_i2_ctrl_if.cmd_ack),
-        .ack_out (                    ),
-        .i2c_busy(                    ),
-        .i2c_al  (                    ),
-        .dout    (s_i2_ctrl_if.dout   ),
-        .scl_i   (scl_pad_i           ),
-        .scl_o   (scl_pad_o           ),
-        .sda_i   (sda_pad_i           ),
-        .sda_o   (sda_pad_o           ),
-        .scl_oen (scl_padoen_o        ),
-        .sda_oen (sda_padoen_o        )
+        .clk     (clk_i       ),
+        .rst     (0           ),
+        .nReset  (arstn_i     ),
+        .ena     (1           ),
+        .clk_cnt (CLK_CNT     ),
+        .start   (start       ),
+        .stop    (stop        ),
+        .read    (read        ),
+        .write   (write       ),
+        .ack_in  (ack_in      ),
+        .din     (din         ),
+        .cmd_ack (cmd_ack     ),
+        .ack_out (            ),
+        .i2c_busy(            ),
+        .i2c_al  (            ),
+        .dout    (dout        ),
+        .scl_i   (scl_pad_i   ),
+        .scl_o   (scl_pad_o   ),
+        .sda_i   (sda_pad_i   ),
+        .sda_o   (sda_pad_o   ),
+        .scl_oen (scl_padoen_o),
+        .sda_oen (sda_padoen_o)
     );
 
     localparam QUEUE_WIDTH = 6;
@@ -103,7 +111,7 @@ module si5340_config_loader
                 IDLE: if (load_i) state <= ACK;
                       else state <= IDLE;
                 ACK: state <= WAIT_ACK;
-                WAIT_ACK: if (s_i2_ctrl_if.cmd_ack) begin
+                WAIT_ACK: if (cmd_ack) begin
                     if (queue[queue_index].stop) state <= STOP;
                     else state <= PAUSE;
                 end
@@ -127,7 +135,7 @@ module si5340_config_loader
                     state       <= ACK;
                 end
                 STOP: state <= WAIT_STOP;
-                WAIT_STOP: if (s_i2_ctrl_if.cmd_ack) state <= QUEUE_INDEX;
+                WAIT_STOP: if (cmd_ack) state <= QUEUE_INDEX;
                            else state <= WAIT_STOP;
                 default: state <= IDLE;
             endcase
@@ -135,17 +143,17 @@ module si5340_config_loader
     end
 
     always_comb begin
-        s_i2_ctrl_if.din = queue[queue_index].data;
-        if (state == ACK || state == STOP) s_i2_ctrl_if.ack_in = 1;
-        else s_i2_ctrl_if.ack_in = 0;
-        if (state == ACK && queue[queue_index].start) s_i2_ctrl_if.start = 1;
-        else s_i2_ctrl_if.start = 0;
-        if (state == STOP && queue[queue_index].stop) s_i2_ctrl_if.stop = 1;
-        else s_i2_ctrl_if.stop = 0;
-        if (state == ACK && queue[queue_index].rw == READ) s_i2_ctrl_if.read = 1;
-        else s_i2_ctrl_if.read = 0;
-        if (state == ACK && queue[queue_index].rw == WRITE) s_i2_ctrl_if.write = 1;
-        else s_i2_ctrl_if.write = 0;
+        din = queue[queue_index].data;
+        if (state == ACK || state == STOP) ack_in = 1;
+        else ack_in = 0;
+        if (state == ACK && queue[queue_index].start) start = 1;
+        else start = 0;
+        if (state == STOP && queue[queue_index].stop) stop = 1;
+        else stop = 0;
+        if (state == ACK && queue[queue_index].rw == READ) read = 1;
+        else read = 0;
+        if (state == ACK && queue[queue_index].rw == WRITE) write = 1;
+        else write = 0;
     end
 
     always_ff @(posedge clk_i) begin

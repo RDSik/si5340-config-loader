@@ -27,5 +27,4 @@ RUN git clone https://github.com/verilator/verilator && \
 
 COPY . .
 
-RUN cd src && \
-    make
+RUN make

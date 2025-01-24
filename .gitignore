@@ -11,5 +11,6 @@ obj_dir
 *.vcd
 *.v.bak
 *.wlf
+*.mem
 transcript
 work

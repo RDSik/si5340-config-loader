@@ -16,16 +16,23 @@ class environment;
         begin
             dut_if.arstn_i = 0;
             @(posedge dut_if.clk_i);
+            $display("Reset done at %g ns", $time);
+            $display("-----------------------------------------");
             dut_if.arstn_i = 1;
         end
     endtask
 
     task run();
-        begin        
+        begin
+            $display("-----------------------------------------");
+            $display("Start simulation");
+            $display("-----------------------------------------");
             dut_if.clk_i = 0;
             rst_gen();
             rd_gen();
             wr_gen();
+            $display("Stop simulation at %g ns", $time);
+            $display("-----------------------------------------");
         end
     endtask
 

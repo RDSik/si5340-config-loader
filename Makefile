@@ -8,14 +8,13 @@ PARSER      := config_parser.py
 PYTHON      := python3
 CONFIG_FILE := Si5340-RevD-Si5340-Registers.txt
 
-SRC_DIR := ./
-TB_DIR  := tb/
+SRC_DIR := src/
+TB_DIR  := src/tb/
 
 SRC_FILES += $(TB_DIR)environment.sv
 SRC_FILES += $(TB_DIR)si5340_config_loader_if.sv
 SRC_FILES += $(TB_DIR)si5340_config_loader_tb.sv
 SRC_FILES += $(SRC_DIR)si5340_config_loader.sv
-SRC_FILES += $(SRC_DIR)i2c_ctrl_if.sv
 SRC_FILES += $(SRC_DIR)cfg_pkg.svh
 SRC_FILES += $(SRC_DIR)i2c_master_bit_ctrl.v
 SRC_FILES += $(SRC_DIR)i2c_master_byte_ctrl.v
@@ -52,4 +51,5 @@ endif
 
 clean:
 	rm -rf obj_dir
+	rm -rf work
 	rm *.vcd

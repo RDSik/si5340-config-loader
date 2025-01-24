@@ -52,6 +52,5 @@ deactivate
 
 ### Using make:
 ```bash
-cd .\src
 make
 ```
