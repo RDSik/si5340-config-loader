@@ -1,17 +1,26 @@
 name: Verilator Simulation
 
 on: 
-  push:
-    branches: [master]
+    push:
+      branches: [master]
+    pull_request:
+      branches: [master]
 
 jobs:
-  build-container:
+  run-container:
     runs-on: ubuntu-latest
     defaults:
       run:
+        shell: bash
         working-directory: ./
     steps:
       - name: Check out the repository to the runner
-        uses: actions/checkout@v1    
-      - name: Build the docker image
-        uses: docker/build-push-action@v2
+        uses: actions/checkout@v2
+      - name: Run Docker container
+        uses: addnab/docker-run-action@v3
+        with:
+            image: r0d0s/fpga_tools:v1.1
+            run: |
+              git clone https://github.com/RDSik/si5340-config-loader.git
+              si5340-config-loader
+              make
