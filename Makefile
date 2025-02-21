@@ -1,7 +1,6 @@
 TOP := si5340_config_loader
 
 SIM        ?= verilator
-WAVE       := gtkwave
 MACRO_FILE := wave.do
 
 PARSER      := config_parser.py
@@ -45,9 +44,7 @@ else ifeq ($(SIM), iverilog)
 endif
 
 wave: 
-ifneq ($(SIM), questa)
-	$(WAVE) $(TOP)_tb.vcd
-endif
+	gtkwave $(TOP)_tb.vcd
 
 clean:
 	rm -rf obj_dir
