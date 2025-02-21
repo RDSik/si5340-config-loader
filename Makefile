@@ -21,9 +21,9 @@ SRC_FILES += $(SRC_DIR)i2c_master_byte_ctrl.v
 SRC_FILES += $(SRC_DIR)i2c_master_defines.v
 SRC_FILES += $(SRC_DIR)timescale.v
 
-.PHONY: all clean
+.PHONY: all wave clean
 
-all: mem_gen build run wave
+all: mem_gen build run
 
 mem_gen:
 	$(PYTHON) $(SRC_DIR)$(PARSER) $(SRC_DIR)$(CONFIG_FILE)
