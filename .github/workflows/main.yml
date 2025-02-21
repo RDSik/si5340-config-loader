@@ -22,5 +22,5 @@ jobs:
             image: r0d0s/fpga_tools:v1.1
             run: |
               git clone https://github.com/RDSik/si5340-config-loader.git
-              si5340-config-loader
+              cd si5340-config-loader
               make
