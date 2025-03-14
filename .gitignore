@@ -8,7 +8,6 @@ syn/*
 !si5340_config_loader.sdc
 myenv
 obj_dir
-.vscode
 *.vcd
 *.v.bak
 *.wlf
